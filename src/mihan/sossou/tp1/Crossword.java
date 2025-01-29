@@ -7,12 +7,12 @@ public class Crossword {
 	private Grid horizontal;
 	private Grid vertical;
 	
-	public Crossword(int hauteur, int largeur) {
+	public Crossword(int height, int width) {
 		
-		this.solution = new Grid(hauteur, largeur);
-		this.proposition = new Grid(hauteur, largeur);
-		this.horizontal = new Grid(hauteur, largeur);
-		this.vertical = new Grid(hauteur, largeur);
+		this.solution = new Grid(height, width);
+		this.proposition = new Grid(height, width);
+		this.horizontal = new Grid(height, width);
+		this.vertical = new Grid(height, width);
 	}
 	
 	public int getHeight() {
@@ -31,7 +31,6 @@ public class Crossword {
 	désignent une cellule existante de la grille
 	*/
 	public boolean correctCoords(int row, int column) {
-		
 		return solution.correctCoords(row, column);
 	}
 	
@@ -39,27 +38,21 @@ public class Crossword {
 	* @return true si la case est noire, false sinon
 	* @pre correctCoords(row, column)
 	* */
-	public boolean isBlackSquare(int row, int column) {		
-		
-		if (correctCoords(row, column)) {
-			return solution.getCell(row, column) == null;
-		}
-	
-		return false;
-	}
+	 public boolean isBlackSquare(int row, int column) {
+		 if (!correctCoords(row, column)) {
+	          throw new IllegalArgumentException("Coordonnées invalides");
+		  }
+		  return solution.getCell(row, column) == null;
+	 }
 
 	/**
 	* Déclarer la case (row, column) noire ou blanche
 	*/
 	public void setBlackSquare(int row, int column, boolean black) {
-		
-		if (black && solution.getCell(row, column) != null) {
-			solution.setCell(row, column, null);
-		}
-		
-		if (!black) {
-			solution.setCell(row, column, "");
-		}		
+		if (!correctCoords(row, column)) {
+	         throw new IllegalArgumentException("Coordonnées invalides");
+	     }
+		 solution.setCell(row, column, black ? null : " ");
 	}
 	
 	/**
@@ -68,31 +61,32 @@ public class Crossword {
 	*/
 	public char getSolution(int row, int column) {
 		
-		if (correctCoords(row, column) && !isBlackSquare(row, column)) {
-			String cellule = solution.getCell(row, column).trim();
-			return cellule.charAt(0);
+		if (!correctCoords(row, column) || isBlackSquare(row, column)) {
+			throw new IllegalArgumentException("Coordonnées invalides ou case noire.");
 		}
-		
-		return '\0';
+		return solution.getCell(row, column).charAt(0);
 	}
 
 	public void setSolution(int row, int column, char solution) {
+		if (!correctCoords(row, column) || isBlackSquare(row, column)) {
+			throw new IllegalArgumentException("Coordonnées invalides ou case noire.");
+		}
 			
 		this.solution.setCell(row, column, String.valueOf(solution));
 	}
 	
 	public char getProposition(int row, int column) {
-		
-		if (correctCoords(row, column) && !isBlackSquare(row, column)) {
-			String cellule = proposition.getCell(row, column).trim();
-			return cellule.charAt(0);
-		}
-		
-		return '\0';
+		if (!correctCoords(row, column) || isBlackSquare(row, column)) {
+            throw new IllegalArgumentException("Coordonnées invalides ou case noire");
+        }
+		 String cell = proposition.getCell(row, column);
+	     return cell == null ? ' ' : cell.charAt(0);
 	}
 
 	public void setProposition(int row, int column, char prop) {
-		
+		if (!correctCoords(row, column) || isBlackSquare(row, column)) {
+            throw new IllegalArgumentException("Coordonnées invalides ou case noire");
+        }
 		proposition.setCell(row, column, String.valueOf(prop));
 	}
 	
@@ -102,24 +96,24 @@ public class Crossword {
 	*	@pre correctCoords(row, column) && !isBlackSquare(row, column)
 	*/
 	public String getDefinition(int row, int column, boolean horizontal) {
-		
-		if (!correctCoords(row, column)) {
-			throw new IllegalArgumentException("Cellule inexistante");
+		 if (!correctCoords(row, column) || isBlackSquare(row, column)) {
+	            throw new IllegalArgumentException("Coordonnées invalides ou case noire");
+	        }
+		if (horizontal) {
+			return this.horizontal.getCell(row, column);
+		}else {
+			return this.vertical.getCell(row, column);
 		}
-		
-		if (isBlackSquare(row, column)) {
-			throw new IllegalArgumentException("Cellule inexistante");
-		}
-		
-		return horizontal ? this.horizontal.getCell(row, column) : vertical.getCell(row, column);
 	}
 
 	public void setDefinition(int row, int column, boolean horizontal, String definition) {
-		
+		 if (!correctCoords(row, column) || isBlackSquare(row, column)) {
+	            throw new IllegalArgumentException("Coordonnées invalides ou case noire");
+	        }
 		if (horizontal) {
 			this.horizontal.setCell(row, column, definition);
 		}else {
-			vertical.setCell(row, column, definition);
+			this.vertical.setCell(row, column, definition);
 		}
 	}
 }

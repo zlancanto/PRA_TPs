@@ -1,28 +1,19 @@
 package mihan.sossou.tp2;
 
-public class Crossword<T> {
-	
-	private Grid<T> solution;
-	private Grid<T> proposition;
-	private Grid<T> horizontal;
-	private Grid<T> vertical;
-	
-	public Crossword(int height, int width) {
-		
-		this.solution = new Grid<>(height, width);
-		this.proposition = new Grid<>(height, width);
-		this.horizontal = new Grid<>(height, width);
-		this.vertical = new Grid<>(height, width);
-	}
-	
-	public int getHeight() {
-		
-		return solution.getHeight();
-	}
-	
-	public int getWidth() {
+import java.util.Iterator;
 
-		return solution.getWidth();		
+public class CrosswordV2 extends Grid<CrosswordSquare> {
+	
+	public CrosswordV2(int height, int width) {
+		
+		super (height, width);
+		
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				setCell(i,j, new CrosswordSquare());
+			}
+			
+		}
 	}
 	
 	/**
@@ -31,7 +22,7 @@ public class Crossword<T> {
 	désignent une cellule existante de la grille
 	*/
 	public boolean correctCoords(int row, int column) {
-		return solution.correctCoords(row, column);
+		return correctCoords(row, column);
 	}
 	
 	/**
@@ -42,7 +33,7 @@ public class Crossword<T> {
 		 if (!correctCoords(row, column)) {
 	          throw new IllegalArgumentException("Coordonnées invalides");
 		  }
-		  return solution.getCell(row, column) == null;
+		  return getCell(row, column).status();
 	 }
 
 	/**
@@ -53,41 +44,43 @@ public class Crossword<T> {
 		if (!correctCoords(row, column)) {
 	         throw new IllegalArgumentException("Coordonnées invalides");
 	     }
-		 solution.setCell(row, column, black ? null : (T) " ");
+		 getCell(row, column).setBlack(black);
 	}
 	
 	/**
 	* @return la solution dans la case (row, column)
 	* @pre correctCoords(row, column) && !isBlackSquare(row, column)
 	*/
-	public T getSolution(int row, int column) {
-		
-		if (!correctCoords(row, column) || isBlackSquare(row, column)) {
-			throw new IllegalArgumentException("Coordonnées invalides ou case noire.");
+	public char getSolution(int row, int column) {
+		CrosswordSquare square = getCell(row, column);
+		if (square.status() || square.getSolution() == null) {
+			throw new IllegalArgumentException("Case noire ou sans solution");
 		}
-		return solution.getCell(row, column);
+		return square.getSolution();
 	}
 
-	public void setSolution(int row, int column, T solution) {
-		if (!correctCoords(row, column) || isBlackSquare(row, column)) {
-			throw new IllegalArgumentException("Coordonnées invalides ou case noire.");
+	public void setSolution(int row, int column, char solution) {
+		CrosswordSquare square = getCell(row, column);
+		if (square.status() || square.getSolution() == null) {
+			throw new IllegalArgumentException("Case noire ou sans solution");
 		}
-			
-		this.solution.setCell(row, column, solution);
+		square.setSolution(solution);
 	}
 	
-	public T getProposition(int row, int column) {
-		if (!correctCoords(row, column) || isBlackSquare(row, column)) {
-            throw new IllegalArgumentException("Coordonnées invalides ou case noire");
+	public char getProposition(int row, int column) {
+		CrosswordSquare square = getCell(row, column);
+		if (square.status() || square.getProposition() == null) {
+            throw new IllegalArgumentException("Case noire ou sans solution");
         }
-	     return proposition.getCell(row, column);
+	     return square.getProposition();
 	}
 
-	public void setProposition(int row, int column, T prop) {
-		if (!correctCoords(row, column) || isBlackSquare(row, column)) {
-            throw new IllegalArgumentException("Coordonnées invalides ou case noire");
+	public void setProposition(int row, int column, char prop) {
+		CrosswordSquare square = getCell(row, column);
+		if (square.status() || square.getProposition() == null) {
+            throw new IllegalArgumentException("Case noire ou sans solution");
         }
-		proposition.setCell(row, column, prop);
+		square.setProposition(prop);
 	}
 	
 	/**

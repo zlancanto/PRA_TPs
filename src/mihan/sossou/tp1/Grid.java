@@ -13,8 +13,9 @@ public class Grid {
 	 * @pre height >= 0 et width >= 0
 	 */
 	public Grid(int height, int width) {
-		assert height >= 0 : "height doit être >= 0";
-		assert width >= 0 : "width doit être >= 0";
+		if (height < 0 || width < 0) {
+            throw new IllegalArgumentException("Les dimensions doivent être positives");
+        }
 		this.height = height;
 		this.width = width;
 		this.array = new String[height][width];
@@ -37,7 +38,7 @@ public class Grid {
 	 */
 	public boolean correctCoords(int row, int column) {
 		
-		return (0 <= row && row < width ) && (0 <= column && column < height);
+		return row >= 0 && row < height  && column >= 0 && column < width;
 	}
 	
 	/**
@@ -59,9 +60,10 @@ public class Grid {
 	 * @pre coordCorrectes(row, column)
 	 */
 	public void setCell(int row, int column, String string) {
-		
-		assert correctCoords(row, column) : "Cellule [" + row + "][" + column + "] inexistante : Mise à jour impossible";
-	    array[row][column] = string;
+		 if (!correctCoords(row, column)) {
+		     throw new IllegalArgumentException("Cellule [" + row + "][" + column + "] inexistante : Mise à jour impossible");
+		 }
+		 array[row][column] = string;
 	}
 	
 	/**
@@ -72,13 +74,13 @@ public class Grid {
 	public String toString() {
 	    StringBuilder table = new StringBuilder();
 	    
-	    for (int row = 0; row < height; ++row) {
-	        for (int column = 0; column < width; ++column) {
+	    for (int i = 0; i < height; ++i) {
+	        for (int j = 0; j < width; ++j) {
 	            // Ajouter la valeur de la cellule ou "null" si la cellule est vide
-	            table.append(array[row][column] == null ? " " : array[row][column]);
+	            table.append(array[i][j] == null ? " " : array[i][j]);
 	            
 	            // Ajouter un séparateur entre les colonnes sauf pour la dernière
-	            if (column < width - 1) {
+	            if (j < width - 1) {
 	                table.append(" | ");
 	            }
 	        }
