@@ -21,6 +21,7 @@ public class CrosswordV2 extends Grid<CrosswordSquare> {
 	* @return true si et seulement si (row, column)
 	désignent une cellule existante de la grille
 	*/
+	@Override
 	public boolean correctCoords(int row, int column) {
 		return correctCoords(row, column);
 	}
@@ -30,20 +31,30 @@ public class CrosswordV2 extends Grid<CrosswordSquare> {
 	* @pre correctCoords(row, column)
 	* */
 	 public boolean isBlackSquare(int row, int column) {
+		 
 		 if (!correctCoords(row, column)) {
 	          throw new IllegalArgumentException("Coordonnées invalides");
 		  }
-		  return getCell(row, column).status();
+		  return getCell(row, column) == null;
 	 }
 
 	/**
 	* Déclarer la case (row, column) noire ou blanche
 	*/
-	@SuppressWarnings("unchecked")
 	public void setBlackSquare(int row, int column, boolean black) {
 		if (!correctCoords(row, column)) {
 	         throw new IllegalArgumentException("Coordonnées invalides");
 	     }
+		
+		if (black) {
+			solution.setCell(row, column, null);
+			proposition.setCell(row, column, null);
+			horizontal.setCell(row, column, null);
+			vertical.setCell(row, column, null);
+		}else{
+			solution.setCell(row, column, " ");
+			proposition.setCell(row, column, " ");
+		}
 		 getCell(row, column).setBlack(black);
 	}
 	
@@ -52,34 +63,62 @@ public class CrosswordV2 extends Grid<CrosswordSquare> {
 	* @pre correctCoords(row, column) && !isBlackSquare(row, column)
 	*/
 	public char getSolution(int row, int column) {
+		
 		CrosswordSquare square = getCell(row, column);
-		if (square.status() || square.getSolution() == null) {
+		
+		if (!correctCoords(row, column)) {
+	         throw new IllegalArgumentException("Coordonnées invalides");
+	     }
+		
+		if (square.isBlack() || square.getSolution() == null) {
 			throw new IllegalArgumentException("Case noire ou sans solution");
 		}
+		
 		return square.getSolution();
 	}
 
 	public void setSolution(int row, int column, char solution) {
+		
 		CrosswordSquare square = getCell(row, column);
-		if (square.status() || square.getSolution() == null) {
+		
+		if (!correctCoords(row, column)) {
+	         throw new IllegalArgumentException("Coordonnées invalides");
+	     }
+		
+		if (square.isBlack() || square.getSolution() == null) {
 			throw new IllegalArgumentException("Case noire ou sans solution");
 		}
+		
 		square.setSolution(solution);
 	}
 	
 	public char getProposition(int row, int column) {
+		
 		CrosswordSquare square = getCell(row, column);
-		if (square.status() || square.getProposition() == null) {
+		
+		if (!correctCoords(row, column)) {
+	         throw new IllegalArgumentException("Coordonnées invalides");
+	     }
+		
+		if (square.isBlack() || square.getProposition() == null) {
             throw new IllegalArgumentException("Case noire ou sans solution");
         }
-	     return square.getProposition();
+		
+		return square.getProposition();
 	}
 
 	public void setProposition(int row, int column, char prop) {
+		
 		CrosswordSquare square = getCell(row, column);
-		if (square.status() || square.getProposition() == null) {
+		
+		if (!correctCoords(row, column)) {
+	         throw new IllegalArgumentException("Coordonnées invalides");
+	     }
+		
+		if (square.isBlack() || square.getProposition() == null) {
             throw new IllegalArgumentException("Case noire ou sans solution");
         }
+		
 		square.setProposition(prop);
 	}
 	
@@ -88,7 +127,7 @@ public class CrosswordV2 extends Grid<CrosswordSquare> {
 	*	si horizontal, et la définition verticale sinon
 	*	@pre correctCoords(row, column) && !isBlackSquare(row, column)
 	*/
-	public T getDefinition(int row, int column, boolean horizontal) {
+	public String getDefinition(int row, int column, boolean horizontal) {
 		 if (!correctCoords(row, column) || isBlackSquare(row, column)) {
 	            throw new IllegalArgumentException("Coordonnées invalides ou case noire");
 	        }
