@@ -6,25 +6,29 @@ public class CrosswordSquare {
     private Character proposition;
     private String horizontal;
     private String vertical;
-    private boolean status;
     
     public CrosswordSquare() {
-    	this.status = false;
-	}
+    	solution = ' ';
+    	proposition = ' ';
+    	horizontal = " ";
+    	vertical = " ";
+    }  
     
     public Character getSolution() {
-    	return solution;
+		return solution;
 	}
-    
-    public void setSolution( Character solution) {
+
+	public void setSolution(Character solution) {
 		this.solution = solution;
 	}
-    
-    public Character getPropCharacter() {
+
+
+
+	public Character getProposition() {
     	return proposition;
 	}
     
-    public void setPropostion(Character proposition) {
+    public void setProposition(Character proposition) {
 		this.proposition = proposition;
 	}
     
@@ -43,13 +47,5 @@ public class CrosswordSquare {
     public void setVertical(String vertical) {
         this.vertical = vertical;
     }
-    
-    public boolean status() {
-		return status;
-	}
-    
-    public void setBlack( boolean black) {
-		status = black;
-	}
 
 }
