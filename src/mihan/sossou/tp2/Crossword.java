@@ -107,7 +107,7 @@ public class Crossword<T> {
 	}
 
 	public void setDefinition(int row, int column, boolean horizontal, T definition) {
-		 if (!correctCoords(row, column) || isBlackSquare(row, column)) {
+		if (!correctCoords(row, column) || isBlackSquare(row, column)) {
 	            throw new IllegalArgumentException("Coordonnées invalides ou case noire");
 	        }
 		if (horizontal) {
