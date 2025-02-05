@@ -27,10 +27,10 @@ public class TicTacToeTest
     @Test
     public void testInit() {
         assertEquals(morpions.getTurn(), Owner.FIRST, "Le premier doit jouer");
-        testInvariant();
         assertTrue(allCaseAreNONE(), "Toutes les cases sont vides");
         assertFalse(morpions.gameOver(), "Le jeu n'a pas encore commencé");
         assertSame(Owner.NONE, morpions.getWinner(), "Il n'y a pas encore de gagnant");
+        testInvariant();
         // ----------------------
         // SÉQUENCE À COMPLÉTER
         // ----------------------
@@ -38,7 +38,26 @@ public class TicTacToeTest
 
     @Test
     public void testRestart() {
+        // On joue dans les cases
+        morpions.play(0, 0);
+        morpions.nextPlayer();
 
+        morpions.play(2, 2);
+        morpions.nextPlayer();
+
+        morpions.play(0, 2);
+        morpions.nextPlayer();
+
+        morpions.play(0, 1);
+        morpions.nextPlayer();
+
+        morpions.play(1, 1);
+        morpions.nextPlayer();
+
+        morpions.restart();
+        assertTrue(allCaseAreNONE(), "Toutes les cases doivent être vides");
+        assertEquals(morpions.getTurn(), Owner.FIRST, "Le premier doit être le joueur courant");
+        testInvariant();
     }
 
     /**
