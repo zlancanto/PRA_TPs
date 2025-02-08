@@ -6,12 +6,15 @@ public class CrosswordSquare {
     private Character proposition;
     private String horizontal;
     private String vertical;
-    
+    // Case noire ou non
+    private boolean statut;
+
     public CrosswordSquare() {
     	solution = ' ';
     	proposition = ' ';
     	horizontal = " ";
     	vertical = " ";
+        statut = true;
     }  
     
     public Character getSolution() {
@@ -21,8 +24,6 @@ public class CrosswordSquare {
 	public void setSolution(Character solution) {
 		this.solution = solution;
 	}
-
-
 
 	public Character getProposition() {
     	return proposition;
@@ -48,4 +49,11 @@ public class CrosswordSquare {
         this.vertical = vertical;
     }
 
+    public boolean isStatut() {
+        return statut;
+    }
+
+    public void setStatut(boolean statut) {
+        this.statut = statut;
+    }
 }
