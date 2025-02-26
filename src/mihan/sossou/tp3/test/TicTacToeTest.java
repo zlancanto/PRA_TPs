@@ -216,7 +216,10 @@ public class TicTacToeTest {
     @Test
     public void testControle() {
         morpions.restart();
-
+        playWithOne(0, 0, morpions);
+        assertTrue(morpions.legalMove(1, 1), "Case disponible : Possible d'y jouer");
+        assertFalse(morpions.legalMove(0, 0), "Case occupée : Impossible d'y jouer");
+        assertTrue(morpions.legalMove(2, 3), "Case inexistante : Impossible d'y jouer");
     }
 
     /**
