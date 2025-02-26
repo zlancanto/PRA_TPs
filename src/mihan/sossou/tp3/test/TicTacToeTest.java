@@ -14,14 +14,9 @@ public class TicTacToeTest {
 
     @BeforeEach
     public void setUp() {
-//		morpions = new TicTacToeV1();
-//		morpions = new TicTacToeV2();
 //		morpions = new TicTacToeV5();
-//		morpions = new TicTacToeV7();
-//		morpions = new TicTacToeV8();
-//		morpions = new TicTacToeV9();
 //		morpions = new TicTacToeV10();
-        morpions = new TicTacToeV6();
+        morpions = new TicTacToeV10();
     }
 
     @Test
@@ -63,24 +58,32 @@ public class TicTacToeTest {
     /**
      * scénarios vérifiant le bon fonctionnement de getTurn()
      */
-	/*@Test
+	@Test
 	public void testGetJoueur() {
-		testInvariant();
-		assertEquals(morpions.getTurn() == Owner.FIRST, "C'est le premier joueur" );
-		morpions.play(1, 1);
-		testInvariant();
+        morpions.restart();
+
+        // Joueur courant = FIRST
+		assertEquals(Owner.FIRST, morpions.getTurn(), "Le joueur courant devrait être FIRST" );
+
+        morpions.play(1, 0);
+		//testInvariant();
 		morpions.nextPlayer();
-		assertEquals(morpions.getTurn() == Owner.SECOND, "Cest le deuxième joueur");
+        // Joueur courant = SECOND
+		assertEquals(Owner.SECOND, morpions.getTurn(), "Le joueur courant devrait être SECOND");
 
-	}*/
+        morpions.play(1, 2);
+        testInvariant();
+        morpions.nextPlayer();
+        // Joueur courant = FIRST
+        assertEquals(Owner.FIRST, morpions.getTurn(), "Le joueur courant devrait être FIRST" );
 
-    /**
-     * scénarios vérifiant le bon fonctionnement de getWinner() et ainsi de suite
-     * pour numberOfRounds(), \dots , jusqu’à play()
-     */
-    @Test
-    public void testGetVainqueur() {
-        //assertEquals(morpions.numberOfRounds() == NB_CASES, "Toutes les cases sont pleines");
+        morpions.play(2, 1);
+        testInvariant();
+        morpions.nextPlayer();
+        // Joueur courant = SECOND
+        assertEquals(Owner.SECOND, morpions.getTurn(), "Le joueur courant devrait être SECOND");
+
+        morpions.restart();
         /*
          * 111
          * 22X
@@ -88,8 +91,30 @@ public class TicTacToeTest {
          */
         playWithTwo(0, 0, 1, 1, morpions);
         playWithTwo(0, 1, 1, 0, morpions);
-        playWithTwo(0, 2, 2, 1, morpions);
+        morpions.play(0, 2);
+        testInvariant();
+        assertTrue(morpions.gameOver(), "Le jeu devrait être terminé");
+        assertEquals(Owner.NONE, morpions.getTurn(), "Le joueur courant devrait être NONE après la fin du jeu");
+	}
+
+    /**
+     * scénarios vérifiant le bon fonctionnement de getWinner() et ainsi de suite
+     * pour numberOfRounds(), \dots , jusqu’à play()
+     */
+    @Test
+    public void testGetVainqueur() {
+        morpions.restart();
+
+        /*
+         * 111
+         * 22X
+         * X2X
+         */
+        playWithTwo(0, 0, 1, 1, morpions);
+        playWithTwo(0, 1, 1, 0, morpions);
+        playWithOne(0, 2, morpions);
         assertEquals(Owner.FIRST, morpions.getWinner(), "Le joueur1 est gagnant");
+        morpions.restart();
 
         /*
          * 22X
@@ -98,8 +123,9 @@ public class TicTacToeTest {
          */
         playWithTwo(1, 0, 0, 0, morpions);
         playWithTwo(1, 1, 0, 1, morpions);
-        playWithTwo(1, 2, 2, 2, morpions);
+        playWithOne(1, 2, morpions);
         assertEquals(Owner.FIRST, morpions.getWinner(), "Le joueur1 est gagnant");
+        morpions.restart();
 
         /*
          * 22X
@@ -108,8 +134,9 @@ public class TicTacToeTest {
          */
         playWithTwo(2, 0, 0, 0, morpions);
         playWithTwo(2, 1, 0, 1, morpions);
-        playWithTwo(2, 2, 1, 1, morpions);
+        playWithOne(2, 2, morpions);
         assertEquals(Owner.FIRST, morpions.getWinner(), "Le joueur1 est gagnant");
+        morpions.restart();
 
         /*
          * 1X2
@@ -118,8 +145,9 @@ public class TicTacToeTest {
          */
         playWithTwo(0, 0, 0, 2, morpions);
         playWithTwo(1, 0, 1, 2, morpions);
-        playWithTwo(2, 0, 2, 1, morpions);
+        playWithOne(2, 0, morpions);
         assertEquals(Owner.FIRST, morpions.getWinner(), "Le joueur1 est gagnant");
+        morpions.restart();
 
         /*
          * 21X
@@ -128,8 +156,9 @@ public class TicTacToeTest {
          */
         playWithTwo(0, 1, 0, 0, morpions);
         playWithTwo(1, 1, 1, 0, morpions);
-        playWithTwo(2, 1, 2, 2, morpions);
+        playWithOne(2, 1, morpions);
         assertEquals(Owner.FIRST, morpions.getWinner(), "Le joueur1 est gagnant");
+        morpions.restart();
 
         /*
          * 2X1
@@ -138,8 +167,9 @@ public class TicTacToeTest {
          */
         playWithTwo(0, 2, 0, 0, morpions);
         playWithTwo(1, 2, 1, 0, morpions);
-        playWithTwo(2, 2, 2, 1, morpions);
+        playWithOne(2, 2, morpions);
         assertEquals(Owner.FIRST, morpions.getWinner(), "Le joueur1 est gagnant");
+        morpions.restart();
 
         /*
          * 1XX
@@ -148,8 +178,9 @@ public class TicTacToeTest {
          */
         playWithTwo(0, 0, 1, 0, morpions);
         playWithTwo(1, 1, 2, 0, morpions);
-        playWithTwo(2, 2, 2, 1, morpions);
+        playWithOne(2, 2, morpions);
         assertEquals(Owner.FIRST, morpions.getWinner(), "Le joueur1 est gagnant");
+        morpions.restart();
 
         /*
          * 221
@@ -158,7 +189,7 @@ public class TicTacToeTest {
          */
         playWithTwo(0, 2, 0, 0, morpions);
         playWithTwo(1, 1, 0, 1, morpions);
-        playWithTwo(2, 0, 1, 0, morpions);
+        playWithOne(2, 0, morpions);
         assertEquals(Owner.FIRST, morpions.getWinner(), "Le joueur1 est gagnant");
     }
 
@@ -184,6 +215,8 @@ public class TicTacToeTest {
      */
     @Test
     public void testControle() {
+        morpions.restart();
+
     }
 
     /**
@@ -194,6 +227,38 @@ public class TicTacToeTest {
      */
     @Test
     public void testFinPartie() {
+        morpions.restart();
+        /**
+         * 111
+         * xxx
+         * 22x
+         */
+        playWithTwo(0, 0, 2, 0, morpions);
+        playWithTwo(0, 1, 2, 1, morpions);
+        playWithOne(0, 2, morpions);
+        assertTrue(morpions.gameOver(), "Le joueur1 est gagnant");
+
+        /**
+         * 2x1
+         * 121
+         * xx2
+         */
+        playWithTwo(0, 2, 1, 1, morpions);
+        playWithTwo(1, 2, 2, 2, morpions);
+        playWithTwo(1, 0, 0, 0, morpions);
+        assertTrue(morpions.gameOver(), "Le joueur2 est gagnant");
+
+        /**
+         * 211
+         * 112
+         * 121
+         */
+        playWithTwo(1, 1, 0, 2, morpions);
+        playWithTwo(2, 2, 0, 0, morpions);
+        playWithTwo(0, 1, 2, 1, morpions);
+        playWithTwo(1, 0, 1, 2, morpions);
+        playWithOne(2, 0, morpions);
+        assertTrue(morpions.gameOver(), "Partie nulle");
     }
 
     private void playWithTwo(int firstRow, int firstCol, int secondRow, int secondCol, AbstractTicTacToe morpions) {
@@ -201,6 +266,12 @@ public class TicTacToeTest {
         testInvariant();
         morpions.nextPlayer();
         morpions.play(secondRow, secondCol);
+        testInvariant();
+        morpions.nextPlayer();
+    }
+
+    private void playWithOne(int row, int col, AbstractTicTacToe morpions) {
+        morpions.play(row, col);
         testInvariant();
         morpions.nextPlayer();
     }
@@ -227,9 +298,9 @@ public class TicTacToeTest {
         assertTrue(morpions.numberOfRounds() >= 0, "Nombre de coups >= 0");
         assertTrue(morpions.numberOfRounds() <= NB_CASES, "Nombre de coups <= " + NB_CASES);
         assertTrue(morpions.getWinner() == Owner.FIRST || morpions.getWinner() == Owner.SECOND
-                           || morpions.getWinner() == Owner.NONE, "Le premier doit jouer");
+                           || morpions.getWinner() == Owner.NONE, "Le vainqueur doit soit être FIRST, soit SECOND, soit NONE");
         assertTrue(morpions.getTurn() == Owner.FIRST || morpions.getTurn() == Owner.SECOND
-                           || morpions.getTurn() == Owner.NONE, "Le premier doit jouer");
+                           || morpions.getTurn() == Owner.NONE, "Le joureur courant doit soit être FIRST, soit SECOND, soit NONE");
         // ----------------------
         // SÉQUENCE À COMPLÉTER
         // ----------------------
