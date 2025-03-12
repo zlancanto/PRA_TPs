@@ -35,4 +35,3 @@ public class Crossword {
         return definition + " (" + horizontal +")" + solution + " @ (" + ligne + "," + colonne + ")";
     }
 }
-
