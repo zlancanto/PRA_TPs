@@ -15,12 +15,9 @@ public class TicTacToeSquare extends TextField {
     public TicTacToeSquare(final int row, final int column) {
         this.row = row;
         this.column = column;
-        setFont(new Font(24));
+        setFont(new Font(10));
         setEditable(false);
         setPrefSize(50, 50);
-
-        // Bind le texte à l'état de la case
-        textProperty().bind(ownerProperty.asString());
 
         // Gestion des événements de la souris
         setOnMouseClicked(this::handleClick);
@@ -41,13 +38,12 @@ public class TicTacToeSquare extends TextField {
     }
 
     private void handleClick(MouseEvent event) {
-        if (model.validSquare(row, column)) {
-            model.play(row, column);
-        }
+        model.play(row, column);
+        textProperty().bind(model.getSquare(row, column).asString());
     }
 
     private void handleMouseEnter(MouseEvent event) {
-        if (model.validSquare(row, column)) {
+        if (model.getSquare(row, column).get() == Owner.NONE) {
             setStyle("-fx-background-color: lightgreen;");
         } else {
             setStyle("-fx-background-color: lightcoral;");

@@ -7,9 +7,12 @@ import javafx.scene.layout.GridPane;
 
 public class TicTacToeController {
     @FXML private GridPane grid;
-    @FXML private Label playerTurnLabel;
-    @FXML private Label winnerLabel;
     @FXML private Button restartButton;
+    @FXML private Label winnerLabel;
+    @FXML private Label playerTurnLabel;
+    @FXML private Label firstPlayerDescriptionLabel;
+    @FXML private Label secondPlayerDescriptionLabel;
+    @FXML private Label casesLibresDescriptionLabel;
 
     private TicTacToeModel model;
 

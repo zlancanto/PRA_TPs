@@ -173,25 +173,36 @@ public class TicTacToeModel
      * libre et le jeu n’est pas terminé
      */
     public BooleanBinding legalMove(int row, int column) {
-        // Vérifier si la case est valide et si elle est vide
-        return Bindings.createBooleanBinding(
-                () -> validSquare(row, column) && board[row][column].get() == Owner.NONE && !gameOver().get(),
-                board[row][column], gameOver()
-        );
+        return new BooleanBinding() {
+            {
+                super.bind(board[row][column], gameOver());
+            }
+
+            @Override
+            protected boolean computeValue() {
+                return validSquare(row, column) && board[row][column].get() == Owner.NONE && !gameOver().get();
+            }
+        };
     }
 
+    /**
+     *
+     * @param owner
+     * @return le score d'un joueur
+     */
     public NumberExpression getScore(Owner owner) {
-        IntegerProperty score = new SimpleIntegerProperty(0);
+
+        int score = 0;
 
         for (int i = 0; i < BOARD_WIDTH; i++) {
             for (int j = 0; j < BOARD_HEIGHT; j++) {
                 if (board[i][j].get() == owner) {
-                    score.set(score.get() + 1);
+                    score++;
                 }
             }
         }
 
-        return score;
+        return new SimpleIntegerProperty(score);
     }
 
     /**
@@ -243,7 +254,7 @@ public class TicTacToeModel
      * @param row
      * @return
      */
-    public boolean checkWinnerHorizontal(int row) {
+    private boolean checkWinnerHorizontal(int row) {
         Owner currentPlayer = turn.get();
         int count = 0;
 
@@ -268,7 +279,7 @@ public class TicTacToeModel
      * @param column
      * @return
      */
-    public boolean checkWinnerVertical(int column) {
+    private boolean checkWinnerVertical(int column) {
         Owner currentPlayer = turn.get();
         int count = 0;
 
@@ -296,7 +307,7 @@ public class TicTacToeModel
      * @param column
      * @return
      */
-    public boolean checkWinnerDiagonal(int row, int column) {
+    private boolean checkWinnerDiagonal(int row, int column) {
         Owner currentPlayer = turn.get();
         int count = 0;
 
@@ -330,5 +341,49 @@ public class TicTacToeModel
         }
 
         return false;
+    }
+
+    /**
+     *
+     * @param owner
+     * @return le nombre de cases occupées par un joueur
+     */
+    public StringExpression playerScoreDescription(Owner owner) {
+        return new StringBinding() {
+            {
+                super.bind(getScore(owner));
+            }
+
+            @Override
+            protected String computeValue() {
+                int score = getScore(owner).intValue();
+                return score + " case" + (score == 1 ? " " : "s ") + "pour " + (owner == Owner.FIRST ? "X" : "O");
+            }
+        };
+    }
+
+    public StringExpression casesLibresDescription() {
+        return new StringBinding() {
+            {
+                for (int i = 0; i < BOARD_HEIGHT; i++) {
+                    for (int j = 0; j < BOARD_WIDTH; j++) {
+                        super.bind(board[i][j]);
+                    }
+                }
+            }
+
+            @Override
+            protected String computeValue() {
+                int caseLibres = 0;
+                for (int i = 0; i < BOARD_HEIGHT; i++) {
+                    for (int j = 0; j < BOARD_WIDTH; j++) {
+                        if (board[i][j].get() == Owner.NONE) {
+                            caseLibres++;
+                        }
+                    }
+                }
+                return caseLibres + " case" + (caseLibres == 1 ? " libre" : "s libres");
+            }
+        };
     }
 }
