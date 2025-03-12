@@ -17,14 +17,14 @@ public class ChargeGrid {
     public static Connection connecterBD() throws SQLException {
         Connection connect;
         // Configuration de la connexion à la base de données
-        connect = DriverManager.getConnection("jdbc:mysql://mysqln.istic.univ-rennes1.fr:3306/base_asossou", "user_asossou", "ISTIC@2025");
+        connect = DriverManager.getConnection("jdbc:mysql://mysqln.istic.univ-rennes1.fr:3306/base_zmihan", "user_zmihan", "123456");
         return connect;
     }
 
     // Retourne la liste des grilles disponibles dans la BD
     public Map<Integer, String> availableGrids() {
     	
-    	HashMap<Integer, String> grilles = new HashMap<Integer, String>();
+    	Map<Integer, String> grilles = new HashMap<>();
     	 String query = "SELECT numero_grille, nom_grille, hauteur, largeur FROM GRID";
 
          try (Statement stmt = connexion.createStatement();
@@ -35,9 +35,8 @@ public class ChargeGrid {
                  String nomGrille = resultat.getString("nom_grille");
                  int hauteur = resultat.getInt("hauteur");
                  int largeur = resultat.getInt("largeur");
-                 
 
-                 String description = nomGrille + "("+hauteur+"x"+largeur+")";
+                 String description = nomGrille + " ("+hauteur+"x"+largeur+") ";
                  grilles.put(numeroGrille, description);
              }
          } catch (SQLException e) {
