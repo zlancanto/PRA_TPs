@@ -15,7 +15,7 @@ public class TicTacToeModel {
 	 */
 	public static final int BOARD_WIDTH = 3;
 	public static final int BOARD_HEIGHT = 3;
-	
+
 	/**
      * Nombre de pièces alignés pour gagner (idem).
      */
@@ -25,7 +25,7 @@ public class TicTacToeModel {
      * Joueur courant.
      */
 	private final ObjectProperty<Owner> turn = new SimpleObjectProperty<>(Owner.FIRST);
-	
+
 	/**
      * Vainqueur du jeu, NONE si pas de vainqueur.
      */
@@ -35,7 +35,7 @@ public class TicTacToeModel {
      * Plateau de jeu.
      */
 	private final ObjectProperty<Owner>[][] board;
-	
+
 	/**
     * Positions gagnantes.
     */
@@ -62,7 +62,7 @@ public class TicTacToeModel {
 	public static TicTacToeModel getInstance() {
 		return TicTacToeModelHolder.INSTANCE;
 	}
-		
+
 	 /**
      * Classe interne selon le pattern singleton.
      */
@@ -115,7 +115,7 @@ public class TicTacToeModel {
 		}
 		return winningBoard[row][column];
 	}
-	
+
 	/**
      * Cette fonction ne doit donner le bon résultat que si le jeu est terminé.
      * L’affichage peut être caché avant la fin du jeu.
@@ -183,6 +183,7 @@ public class TicTacToeModel {
 			// Vérifier la victoire après le coup.
 			if (checkVictory(row, column)) {
 				setWinner(turnProperty().get());
+				turn.set(Owner.NONE);
 			} else if (isBoardFull()) {
 				// Match nul : aucun gagnant (on laisse winner à NONE pour signaler cela).
 				setWinner(Owner.NONE);
@@ -191,7 +192,7 @@ public class TicTacToeModel {
 			}
 		}
 	}
-	
+
 	/**
 	* @return true s’il est possible de jouer dans la case c’est-à-dire la case est
 	* libre et le jeu n’est pas terminé
@@ -215,28 +216,20 @@ public class TicTacToeModel {
 	 * joueur spécifié.
 	 */
 	public NumberExpression getScore(Owner owner) {
-		// Rassembler toutes les dépendances (chaque case du plateau)
-		ObservableList<ObservableValue<?>> dependencies = FXCollections.observableArrayList();
+
+		int score = 0;
+
 		for (int i = 0; i < BOARD_HEIGHT; i++) {
 			for (int j = 0; j < BOARD_WIDTH; j++) {
-				dependencies.add(board[i][j]);
-			}
-		}
-		// Créer un IntegerBinding qui calcule le score
-		IntegerBinding scoreBinding = Bindings.createIntegerBinding(() -> {
-			int score = 0;
-			for (int i = 0; i < BOARD_HEIGHT; i++) {
-				for (int j = 0; j < BOARD_WIDTH; j++) {
-					if (board[i][j].get() == owner) {
-						score++;
-					}
+				if (board[i][j].get() == owner) {
+					score++;
 				}
 			}
-			return score;
-		}, dependencies.toArray(new ObservableValue<?>[0]));
-		return scoreBinding;
+		}
+
+		return new SimpleIntegerProperty(score);
 	}
-	
+
 	/**
      * @return true si le jeu est terminé
      * (soit un joueur a gagné, soit il n’y a plus de cases à jouer)
@@ -255,6 +248,29 @@ public class TicTacToeModel {
 			@Override
 			protected boolean computeValue() {
 				return winner.get() != Owner.NONE || isBoardFull();
+			}
+		};
+	}
+
+	/**
+	 *
+	 * @param owner
+	 * @return le nombre de cases occupées par un joueur
+	 */
+	public StringExpression playerScoreDescription(Owner owner) {
+		return new StringBinding() {
+			{
+				for (int i = 0; i < BOARD_HEIGHT; i++) {
+					for (int j = 0; j < BOARD_WIDTH; j++) {
+						super.bind(board[i][j]);
+					}
+				}
+			}
+
+			@Override
+			protected String computeValue() {
+				int score = getScore(owner).intValue();
+				return score + " case" + ((score == 1 || score == 0) ? " " : "s ") + "pour " + (owner == Owner.FIRST ? "X" : "O");
 			}
 		};
 	}
@@ -281,7 +297,7 @@ public class TicTacToeModel {
 	private boolean checkVictory(int row, int col) {
 	    Owner player = board[row][col].get();
 	    boolean hasWon = false;
-	
+
 	    // Vérifier chaque direction indépendemment
 	    if (checkDirection(row, col, 1, 0, player)) { // Ligne
 	        hasWon = true;
@@ -362,4 +378,28 @@ public class TicTacToeModel {
 		}
 	}
 
+	public StringExpression casesLibresDescription() {
+		return new StringBinding() {
+			{
+				for (int i = 0; i < BOARD_HEIGHT; i++) {
+					for (int j = 0; j < BOARD_WIDTH; j++) {
+						super.bind(board[i][j]);
+					}
+				}
+			}
+
+			@Override
+			protected String computeValue() {
+				int caseLibres = 0;
+				for (int i = 0; i < BOARD_HEIGHT; i++) {
+					for (int j = 0; j < BOARD_WIDTH; j++) {
+						if (board[i][j].get() == Owner.NONE) {
+							caseLibres++;
+						}
+					}
+				}
+				return caseLibres + " case" + ((caseLibres == 1 || caseLibres == 0) ? " libre" : "s libres");
+			}
+		};
+	}
 }
