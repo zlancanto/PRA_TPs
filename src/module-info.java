@@ -7,5 +7,6 @@ module PRA.TPs {
     requires javafx.fxml;
     requires javafx.graphics;
     requires morpion;
+    exports mihan.sossou.tp5 to javafx.graphics;
     exports mihan.sossou.morpion to javafx.graphics;
 }
