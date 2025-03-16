@@ -1,72 +1,138 @@
 package mihan.sossou.morpion;
 
-import javafx.beans.property.*;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.binding.StringBinding;
+import javafx.beans.binding.StringExpression;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 
 public class TicTacToeSquare extends TextField {
-    private static TicTacToeModel model = TicTacToeModel.getInstance();
+
     private final int row;
     private final int column;
-    private ObjectProperty<Owner> ownerProperty = new SimpleObjectProperty<>(Owner.NONE);
-    private BooleanProperty winnerProperty = new SimpleBooleanProperty(false);
+    private final TicTacToeModel model;
+    private final static String INITIAL_STYLE = "-fx-alignment: center;" +
+                                                        " -fx-border-color: black;" +
+                                                        " -fx-border-width: 1px; " +
+                                                        "-fx-background-color: transparent;";
+    private final static String HOVER_STYLE_RED = "-fx-alignment: center;" +
+                                                          " -fx-border-color: black;" +
+                                                          " -fx-border-width: 1px; " +
+                                                          "-fx-background-color: red;";
+    private final static String HOVER_STYLE_LIGHTGREEN = "-fx-alignment: center;" +
+                                                                 " -fx-border-color: black;" +
+                                                                 " -fx-border-width: 1px; " +
+                                                                 "-fx-background-color: lightgreen;";
 
-    public TicTacToeSquare(final int row, final int column) {
+    public TicTacToeSquare(int row, int column) {
+        super();
         this.row = row;
         this.column = column;
-        setFont(new Font(24));
+        this.model = TicTacToeModel.getInstance();
+
+        //Désactiver l'édition et le focus pour ne pas afficher le caret clignotant
         setEditable(false);
-        setPrefSize(50, 50);
+        setFocusTraversable(false);
 
-        // Bind le texte à l'état de la case
-        textProperty().bind(ownerProperty.asString());
+        //Configuration de la taille, police, et style de base
+        setPrefSize(100, 100);
+        setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        setMinSize(Double.MIN_VALUE, Double.MIN_VALUE);
+        resetStyle();
 
-        // Gestion des événements de la souris
-        setOnMouseClicked(this::handleClick);
-        setOnMouseEntered(this::handleMouseEnter);
-        setOnMouseExited(this::handleMouseExit);
+        //Affichage dynamique de X et O
+        textProperty().bind(asString(row, column));
 
-        // Mise à jour de la couleur en fonction du propriétaire
-        ownerProperty.addListener((obs, oldVal, newVal) -> updateStyle());
-        winnerProperty.addListener((obs, oldVal, newVal) -> updateStyle());
-    }
+        /**
+         * Écouteurs de changement de taille de fenêtre
+         * pour adapter la taille de la police
+         */
+        widthProperty().addListener((obs, oldWidth, newWidth) -> adjustFontSize(3));
+        heightProperty().addListener((obs, oldHeight, newHeight) -> adjustFontSize(3));
 
-    public ObjectProperty<Owner> ownerProperty() {
-        return ownerProperty;
-    }
+        //Agrandir la police uniquement si cette case fait partie de la combinaison gagnante
+        model.getWinningSquare(row, column).addListener((obs, oldValue, isWinningSquare) -> {
+            if (isWinningSquare) {
+                // Police plus grande
+                adjustFontSize(2);
+            }
+            else {
+                //Réinitialiser le style lors du restart()
+                resetStyle();
+            }
+        });
 
-    public BooleanProperty winnerProperty() {
-        return winnerProperty;
-    }
-
-    private void handleClick(MouseEvent event) {
-        if (model.validSquare(row, column)) {
+        /**
+         *  Écouteurs de souris (click, entered, exited)
+         */
+        setOnMouseClicked(e -> {
             model.play(row, column);
+            setStyleWhenMouseEntered();
+        });
+        setOnMouseEntered(e -> setStyleWhenMouseEntered());
+        setOnMouseExited(e -> setStyleWhenMouseExited());
+    }
+
+    //Réinitialiser le style de la case
+    private void resetStyle() {
+        setFont(new Font(24));
+        setStyle(INITIAL_STYLE);
+    }
+
+    /**
+     * Style lors du survol
+     */
+    private void setStyleWhenMouseEntered() {
+        BooleanBinding legal = model.legalMove(row, column);
+        // S'il est possible de jouer dans la case
+        if (legal.get()) {
+            setStyle(HOVER_STYLE_LIGHTGREEN);
+        }
+        else {
+            setStyle(HOVER_STYLE_RED);
         }
     }
 
-    private void handleMouseEnter(MouseEvent event) {
-        if (model.validSquare(row, column)) {
-            setStyle("-fx-background-color: lightgreen;");
-        } else {
-            setStyle("-fx-background-color: lightcoral;");
-        }
+    /**
+     * Style quand on arrête de survoler la case
+     */
+    private void setStyleWhenMouseExited() {
+        setStyle(INITIAL_STYLE);
     }
 
-    private void handleMouseExit(MouseEvent event) {
-        updateStyle();
+    /**
+     * Ajuster la taille de la police en fonction de la taille de la case
+      * @param divisionFactor
+     */
+    private void adjustFontSize(int divisionFactor) {
+        double fontSize = Math.min(getWidth(), getHeight()) / divisionFactor;
+        setFont(new Font(fontSize));
     }
 
-    private void updateStyle() {
-        if (winnerProperty.get()) {
-            setStyle("-fx-font-size: 28px; -fx-font-weight: bold;");
-        } else if (ownerProperty.get() == Owner.FIRST) {
-            setStyle("-fx-background-color: lightblue;");
-        } else if (ownerProperty.get() == Owner.SECOND) {
-            setStyle("-fx-background-color: lightcoral;");
-        } else {
-            setStyle("");
-        }
+    /**
+     * @param row
+     * @param column
+     * @return affichage de la grille en String
+     */
+    private StringExpression asString(int row, int column) {
+        return new StringBinding() {
+            {
+                super.bind(model.getSquare(row, column));
+            }
+
+            @Override
+            protected String computeValue() {
+                Owner owner = model.getSquare(row, column).get();
+                if (owner == Owner.FIRST) {
+                    return "X";
+                }
+                else if (owner == Owner.SECOND) {
+                    return "O";
+                }
+                else {
+                    return "";
+                }
+            }
+        };
     }
 }
