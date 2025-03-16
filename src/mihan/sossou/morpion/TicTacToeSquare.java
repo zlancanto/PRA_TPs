@@ -102,7 +102,7 @@ public class TicTacToeSquare extends TextField {
 
     /**
      * Ajuster la taille de la police en fonction de la taille de la case
-      * @param divisionFactor
+     * @param divisionFactor
      */
     private void adjustFontSize(int divisionFactor) {
         double fontSize = Math.min(getWidth(), getHeight()) / divisionFactor;
