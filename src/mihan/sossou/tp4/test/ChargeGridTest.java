@@ -1,10 +1,10 @@
 package mihan.sossou.tp4.test;
 import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
 
 import mihan.sossou.tp4.ChargeGrid;
 import mihan.sossou.tp4.Crossword;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.sql.*;
 import java.util.List;
@@ -12,16 +12,31 @@ import java.util.List;
 public class ChargeGridTest {
     private ChargeGrid chargeGrid;
     private Connection connection;
+    private final static String DATABASE_URL = "jdbc:mysql://localhost:3306/base_zmihan";
 
     @Before
     public void setUp() throws SQLException {
         chargeGrid = new ChargeGrid();
 
         // Connexion à la base de données
-        connection = DriverManager.getConnection("jdbc:mysql://mysqln.istic.univ-rennes1.fr:3306/base_asossou", "user_asossou", "ISTIC@2025");
-
+        connection = DriverManager.getConnection(DATABASE_URL, "root", "");
     }
 
+    //Méthode pour récupérer la valeur de la colonne 'controle' dans GRILLE
+    private String getControleFromDB(int numGrille) throws SQLException {
+        String controle = "";
+        String query = "SELECT controle FROM GRID WHERE numero_grille = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, numGrille);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    controle = rs.getString("controle");
+                }
+            }
+        }
+        return (controle != null) ? controle : "";
+    }
+    
     @Test
     public void testExtractGrid() throws SQLException {
         int numGrille = 10;  // On teste la grille numéro 10
@@ -36,11 +51,11 @@ public class ChargeGridTest {
         assertFalse("La liste ne doit pas être vide", crosswords.isEmpty());
 
         // Reconstruction de la grille à partir des objets Crossword
-        String actualSolution = buildGridFromEntries(crosswords);
+        String actualSolution = buildGridFromEntries(crosswords, expectedSolution);
         
-        System.out.println("🔹 Solution attendue (BDD) : " + expectedSolution);
-        System.out.println("🔹 Solution générée : " + actualSolution);
-        System.out.println("🔹 Liste des mots récupérés :");
+        System.out.println("Solution attendue (BDD) : " + expectedSolution);
+        System.out.println("Solution générée :        " + actualSolution);
+        System.out.println("Liste des mots récupérés :");
         for (Crossword word : crosswords) {
             System.out.println(word);
         }
@@ -49,34 +64,20 @@ public class ChargeGridTest {
                      expectedSolution, actualSolution);
     }
 
-    // 🔹 Méthode pour récupérer la valeur de la colonne 'controle' dans GRILLE
-    private String getControleFromDB(int numGrille) throws SQLException {
-        String query = "SELECT controle FROM GRID WHERE numero_grille = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, numGrille);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getString("controle");
-                }
-            }
-        }
-        return null;
-    }
-
-    // 🔹 Méthode pour reconstruire la grille à partir des mots croisés récupérés
-    private String buildGridFromEntries(List<Crossword> crosswords) {
+    //Méthode pour reconstruire la grille à partir des mots croisés récupérés
+    private String buildGridFromEntries(List<Crossword> crosswords, String controle) {
         // On récupère la hauteur et la largeur max pour construire la grille
-        int maxLigne = 0, maxColonne = 0;
+        int maxHeight = 0, maxWidth = 0;
         for (Crossword e : crosswords) {
-            maxLigne = Math.max(maxLigne, e.getLigne());
-            maxColonne = Math.max(maxColonne, e.getColonne() + e.getSolution().length() - 1);
+            maxHeight = Math.max(maxHeight, e.getLigne());
+            maxWidth = Math.max(maxWidth, e.getColonne());
         }
 
         // On initialise la grille avec des étoiles (cases noires)
-        char[][] grid = new char[maxLigne + 1][maxColonne + 1];
-        for (int i = 0; i <= maxLigne; i++) {
-            for (int j = 0; j <= maxColonne; j++) {
-                grid[i][j] = ' '; // Par défaut, toutes les cases sont noires
+        char[][] grid = new char[maxHeight][maxWidth];
+        for (int i = 0; i < maxHeight; i++) {
+            for (int j = 0; j < maxWidth; j++) {
+                grid[i][j] = '*'; //
             }
         }
 
@@ -84,29 +85,27 @@ public class ChargeGridTest {
         for (Crossword entry : crosswords) {
             int row = entry.getLigne();
             int col = entry.getColonne();
-            int hor = entry.getHorizontal();
 
             String word = entry.getSolution().toUpperCase();
 
-            if (hor == 1) {
+            if (entry.isHorizontal()) {
                 for (int i = 0; i < word.length(); i++) {
-                    grid[row][col + i] = word.charAt(i);
+                    grid[row-1][col-1 + i] = word.charAt(i);
                 }
             } else { // Mot vertical
                 for (int i = 0; i < word.length(); i++) {
-                    grid[row + i][col] = word.charAt(i);
+                    grid[row-1 + i][col-1] = word.charAt(i);
                 }
             }
         }
 
         // On reconstruit la chaîne en lisant ligne par ligne
         StringBuilder reconstructed = new StringBuilder();
-        for (int i = 0; i <= maxLigne; i++) {
-            for (int j = 0; j <= maxColonne; j++) {
-                reconstructed.append(grid[i][j] == ' ' ? '*' : grid[i][j]);
+        for (int i = 0; i < maxHeight; i++) {
+            for (int j = 0; j < maxWidth; j++) {
+                reconstructed.append(grid[i][j]);
             }
         }
-
         return reconstructed.toString();
     }
 }

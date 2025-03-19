@@ -1,14 +1,13 @@
 package mihan.sossou.tp4;
 
-public class Crossword {
-    private String definition;
-    private int horizontal;
+//import mihan.sossou.tp2.CrosswordV2;
+public class Crossword{
+    private boolean horizontal;
     private int ligne;
     private int colonne;
     private String solution;
-
-    public Crossword(String definition, int horizontal, int ligne, int colonne, String solution) {
-        this.definition = definition;
+ 
+    public Crossword(boolean horizontal, int ligne, int colonne, String solution) {
         this.horizontal = horizontal;
         this.ligne = ligne;
         this.colonne = colonne;
@@ -27,11 +26,18 @@ public class Crossword {
     	return colonne;
     }
     
-    public int getHorizontal() {
-        return horizontal;
+    public boolean isHorizontal() { 
+    	return horizontal; 
     }
 
-	public String toString() {
-        return definition + " (" + horizontal +")" + solution + " @ (" + ligne + "," + colonne + ")";
+    @Override
+    public String toString() {
+        return "Crossword{" +
+                "ligne=" + ligne +
+                ", colonne=" + colonne +
+                ", horizontal=" + horizontal +
+                ", solution='" + solution + '\'' +
+                '}';
     }
 }
+
