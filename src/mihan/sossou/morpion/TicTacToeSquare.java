@@ -38,7 +38,7 @@ public class TicTacToeSquare extends TextField {
         setPrefSize(100, 100);
         setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         setMinSize(Double.MIN_VALUE, Double.MIN_VALUE);
-        resetStyle();
+        setStyle(INITIAL_STYLE);
 
         //Affichage dynamique de X et O
         textProperty().bind(asString(row, column));
@@ -75,8 +75,8 @@ public class TicTacToeSquare extends TextField {
 
     //Réinitialiser le style de la case
     private void resetStyle() {
-        setFont(new Font(24));
         setStyle(INITIAL_STYLE);
+        adjustFontSize(3);
     }
 
     /**
@@ -102,7 +102,7 @@ public class TicTacToeSquare extends TextField {
 
     /**
      * Ajuster la taille de la police en fonction de la taille de la case
-      * @param divisionFactor
+     * @param divisionFactor
      */
     private void adjustFontSize(int divisionFactor) {
         double fontSize = Math.min(getWidth(), getHeight()) / divisionFactor;

@@ -5,6 +5,7 @@ import java.util.*;
 
 public class ChargeGrid {
     private Connection connexion;
+    private final static String DATABASE_URL = "jdbc:mysql://localhost:3306/base_zmihan";
 
     public ChargeGrid() {
         try {
@@ -17,14 +18,14 @@ public class ChargeGrid {
     public static Connection connecterBD() throws SQLException {
         Connection connect;
         // Configuration de la connexion à la base de données
-        connect = DriverManager.getConnection("jdbc:mysql://mysqln.istic.univ-rennes1.fr:3306/base_zmihan", "user_zmihan", "123456");
+        connect = DriverManager.getConnection(DATABASE_URL/*"jdbc:mysql://mysqln.istic.univ-rennes1.fr:3306/base_asossou"*/, "root"/*"user_asossou"*/, ""/*"ISTIC@2025"*/);
         return connect;
     }
 
     // Retourne la liste des grilles disponibles dans la BD
     public Map<Integer, String> availableGrids() {
     	
-    	Map<Integer, String> grilles = new HashMap<>();
+    	HashMap<Integer, String> grilles = new HashMap<Integer, String>();
     	 String query = "SELECT numero_grille, nom_grille, hauteur, largeur FROM GRID";
 
          try (Statement stmt = connexion.createStatement();
@@ -35,8 +36,9 @@ public class ChargeGrid {
                  String nomGrille = resultat.getString("nom_grille");
                  int hauteur = resultat.getInt("hauteur");
                  int largeur = resultat.getInt("largeur");
+                 
 
-                 String description = nomGrille + " ("+hauteur+"x"+largeur+") ";
+                 String description = nomGrille + "("+hauteur+"x"+largeur+")";
                  grilles.put(numeroGrille, description);
              }
          } catch (SQLException e) {
@@ -48,19 +50,19 @@ public class ChargeGrid {
     // Extrait une grille spécifique de la BD
     public List<Crossword> extractGrid(int numGrille) {
     	List<Crossword> crosswords = new ArrayList<>();
-    	String query = "SELECT definition, horizontal, ligne, colonne, solution FROM CROSSWORD WHERE numero_grille = ?";
+    	String query = "SELECT horizontal, ligne, colonne, solution FROM CROSSWORD WHERE numero_grille = ?";
         try (PreparedStatement pstmt = connexion.prepareStatement(query)) {
             pstmt.setInt(1, numGrille);
             ResultSet resultat = pstmt.executeQuery();
 
             while (resultat.next()) {
-                String definition = resultat.getString("definition");
-                int horizontal = resultat.getInt("horizontal");
+                //String definition = resultat.getString("definition");
+                boolean horizontal = resultat.getInt("horizontal") == 1;
                 int ligne = resultat.getInt("ligne");
                 int colonne = resultat.getInt("colonne");
                 String solution = resultat.getString("solution");
                 
-                Crossword crossword = new Crossword(definition, horizontal, ligne,colonne, solution);
+                Crossword crossword = new Crossword(horizontal, ligne,colonne, solution);
                 crosswords.add(crossword);
             }
         } catch (SQLException e) {
@@ -68,6 +70,8 @@ public class ChargeGrid {
         }
         return crosswords;
     }
+    
+  
     
     public static void main(String[] args) {
     	ChargeGrid chargeGrid = new ChargeGrid();
