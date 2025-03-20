@@ -1,4 +1,4 @@
-package mihan.sossou.crossword;
+package mihan.sossou.crossword.model;
 
 public class Clue {
 	private String clue;

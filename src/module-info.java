@@ -8,4 +8,6 @@ module PRA.TPs {
     requires javafx.graphics;
     requires morpion;
     exports mihan.sossou.morpion to javafx.graphics;
+    exports mihan.sossou.crossword to javafx.graphics;
+    opens mihan.sossou.tp4.test to junit;
 }

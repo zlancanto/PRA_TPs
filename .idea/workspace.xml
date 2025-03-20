@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85000885-0c5a-4d97-bd64-c6df1e40c7ce" name="Changes" comment="" />
+    <list default="true" id="85000885-0c5a-4d97-bd64-c6df1e40c7ce" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PRA_TPs.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PRA_TPs.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/Clue.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/Crossword.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/CrosswordSquare.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/Grid.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/tp4/ChargeGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/tp4/ChargeGrid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/tp4/Crossword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/tp4/Crossword.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/module-info.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,9 +24,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="package-info" />
         <option value="module-info" />
+        <option value="Enum" />
+        <option value="CSS File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -37,12 +50,16 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Application.ChargeGrid.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CrosswordApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Database.executor&quot;: &quot;Run&quot;,
     &quot;Application.TicTacToeApp.executor&quot;: &quot;Run&quot;,
     &quot;Application.TicTacToeView.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ChargeGridTest.testExtractGrid.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;zlanca&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Univ-Rennes/Projet/PRA/javafx-sdk-23.0.2/lib/javafx.web.jar&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/mihan/OneDrive/Documents/Univ-Rennes/L3-MIAGE/S2/PRA/TP/TP4/mysql-connector-j-8.0.31.jar&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -60,16 +77,43 @@
       <recent name="C:\Univ-Rennes\Projet\PRA\PRA_TPs\lib" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Univ-Rennes\Projet\PRA\PRA_TPs" />
       <recent name="C:\Univ-Rennes\Projet\PRA\PRA_TPs\src\mihan\sossou" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.TicTacToeApp">
+  <component name="RunManager" selected="Application.CrosswordApp">
     <configuration name="ChargeGrid" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="mihan.sossou.tp4.ChargeGrid" />
       <module name="PRA_TPs" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="mihan.sossou.tp4.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CrosswordApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="mihan.sossou.crossword.CrosswordApp" />
+      <module name="PRA_TPs" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="mihan.sossou.crossword.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Database" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="mihan.sossou.crossword.controller.Database" />
+      <module name="PRA_TPs" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="mihan.sossou.crossword.model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -92,15 +136,18 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TicTacToeView" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="mihan.sossou.morpion.TicTacToeView" />
+    <configuration name="ChargeGridTest.testExtractGrid" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="PRA_TPs" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="mihan.sossou.morpion.*" />
+          <option name="PATTERN" value="mihan.sossou.tp4.test.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="mihan.sossou.tp4.test" />
+      <option name="MAIN_CLASS_NAME" value="mihan.sossou.tp4.test.ChargeGridTest" />
+      <option name="METHOD_NAME" value="testExtractGrid" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -117,15 +164,19 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.CrosswordApp" />
+      <item itemvalue="Application.Database" />
       <item itemvalue="Application.TicTacToeApp" />
       <item itemvalue="Application.ChargeGrid" />
-      <item itemvalue="Application.TicTacToeView" />
+      <item itemvalue="JUnit.ChargeGridTest.testExtractGrid" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TicTacToeApp" />
-        <item itemvalue="Application.TicTacToeView" />
+        <item itemvalue="Application.CrosswordApp" />
+        <item itemvalue="JUnit.ChargeGridTest.testExtractGrid" />
         <item itemvalue="Application.ChargeGrid" />
+        <item itemvalue="Application.Database" />
+        <item itemvalue="Application.TicTacToeApp" />
       </list>
     </recent_temporary>
   </component>
@@ -163,6 +214,9 @@
       <workItem from="1742089019129" duration="42914000" />
       <workItem from="1742158912146" duration="3195000" />
       <workItem from="1742162722122" duration="1566000" />
+      <workItem from="1742312696149" duration="2150000" />
+      <workItem from="1742369961969" duration="41535000" />
+      <workItem from="1742460529360" duration="11599000" />
     </task>
     <servers />
   </component>
