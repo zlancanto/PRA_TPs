@@ -1,4 +1,4 @@
-package mihan.sossou.crossword.model;
+package mihan.sossou.crossword.enums;
 
 public enum GridSize {
     SIZE(0, 0);

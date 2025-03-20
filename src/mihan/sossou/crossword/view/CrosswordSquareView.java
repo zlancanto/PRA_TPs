@@ -11,6 +11,7 @@ import javafx.beans.binding.Bindings;
 import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
+import mihan.sossou.crossword.enums.Direction;
 import mihan.sossou.crossword.model.CrosswordSquare;
 
 public class CrosswordSquareView extends StackPane {
@@ -227,9 +228,5 @@ public class CrosswordSquareView extends StackPane {
 
     public void setCurrentDirection(Direction currentDirection) {
         this.currentDirection = currentDirection;
-    }
-
-    private enum Direction {
-        HORIZONTAL, VERTICAL
     }
 }

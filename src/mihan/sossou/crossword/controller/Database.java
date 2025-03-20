@@ -1,7 +1,7 @@
 package mihan.sossou.crossword.controller;
 
 import mihan.sossou.crossword.model.CrosswordBD;
-import mihan.sossou.crossword.model.GridSize;
+import mihan.sossou.crossword.enums.GridSize;
 
 import java.sql.*;
 import java.util.ArrayList;

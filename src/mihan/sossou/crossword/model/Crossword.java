@@ -4,6 +4,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mihan.sossou.crossword.controller.Database;
+import mihan.sossou.crossword.enums.GridSize;
 
 import java.util.List;
 
@@ -11,6 +12,10 @@ public class Crossword extends Grid<CrosswordSquare> {
 
     private ObservableList<Clue> verticalClues;
     private ObservableList<Clue> horizontalClues;
+
+    private CrosswordSquare currentSquare;
+    private Clue verticalClueCurrent;
+    private Clue horizontalClueCurrent;
 
     private Crossword(int height, int width) {
         // Appel du constructeur de Grid
@@ -146,14 +151,6 @@ public class Crossword extends Grid<CrosswordSquare> {
         }
     }
 
-    public ObservableList<Clue> getVerticalClues() {
-        return verticalClues;
-    }
-
-    public ObservableList<Clue> getHorizontalClues() {
-        return horizontalClues;
-    }
-
     public static Crossword createPuzzle(Database database, int puzzleNumber) {
 
         GridSize GRID_SIZE = database.getGridSize(puzzleNumber);
@@ -277,5 +274,37 @@ public class Crossword extends Grid<CrosswordSquare> {
         }
 
         return crossword;
+    }
+
+    public ObservableList<Clue> getVerticalClues() {
+        return verticalClues;
+    }
+
+    public ObservableList<Clue> getHorizontalClues() {
+        return horizontalClues;
+    }
+
+    public CrosswordSquare getCurrentSquare() {
+        return currentSquare;
+    }
+
+    public void setCurrentSquare(CrosswordSquare currentSquare) {
+        this.currentSquare = currentSquare;
+    }
+
+    public Clue getVerticalClueCurrent() {
+        return verticalClueCurrent;
+    }
+
+    public void setVerticalClueCurrent(Clue verticalClueCurrent) {
+        this.verticalClueCurrent = verticalClueCurrent;
+    }
+
+    public Clue getHorizontalClueCurrent() {
+        return horizontalClueCurrent;
+    }
+
+    public void setHorizontalClueCurrent(Clue horizontalClueCurrent) {
+        this.horizontalClueCurrent = horizontalClueCurrent;
     }
 }

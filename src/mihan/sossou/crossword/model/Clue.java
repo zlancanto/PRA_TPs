@@ -26,6 +26,10 @@ public class Clue {
 		return row;
 	}
 
+	public boolean isHorizontal() {
+		return horizontal;
+	}
+
 	@Override
 	public String toString() {
 		return clue + " ("+ row + "," + column + ")";

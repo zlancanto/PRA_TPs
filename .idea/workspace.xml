@@ -5,16 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85000885-0c5a-4d97-bd64-c6df1e40c7ce" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PRA_TPs.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PRA_TPs.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/Clue.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/Crossword.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/CrosswordSquare.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/Grid.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/tp4/ChargeGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/tp4/ChargeGrid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/tp4/Crossword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/tp4/Crossword.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/CrosswordApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/CrosswordApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/controller/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/controller/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/Clue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/Clue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/Crossword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/Crossword.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/GridSize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/enums/GridSize.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/view/CrosswordSquareView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/view/CrosswordSquareView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,8 +23,8 @@
       <list>
         <option value="package-info" />
         <option value="module-info" />
-        <option value="Enum" />
         <option value="CSS File" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -113,7 +110,7 @@
       <module name="PRA_TPs" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="mihan.sossou.crossword.model.*" />
+          <option name="PATTERN" value="mihan.sossou.crossword.enums.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -216,7 +213,7 @@
       <workItem from="1742162722122" duration="1566000" />
       <workItem from="1742312696149" duration="2150000" />
       <workItem from="1742369961969" duration="41535000" />
-      <workItem from="1742460529360" duration="11599000" />
+      <workItem from="1742460529360" duration="25077000" />
     </task>
     <servers />
   </component>
