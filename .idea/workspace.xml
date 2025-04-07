@@ -5,24 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85000885-0c5a-4d97-bd64-c6df1e40c7ce" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/app/CrosswordApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/CrosswordApp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/controller/ClueController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/controller/CrosswordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/controller/CrosswordController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/controller/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/controller/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/enums/Direction.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/Clue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/Clue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/Crossword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/Crossword.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/CrosswordBD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/CrosswordBD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/CrosswordSquare.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/CrosswordSquare.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/Grid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/Grid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/style/clue-view.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/style/crossword-square.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/view/ClueView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/view/CrosswordSquareView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/view/CrosswordView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/app/CrosswordApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/app/CrosswordApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,8 +21,8 @@
         <option value="Enum" />
         <option value="JavaFXApplication" />
         <option value="FxmlFile" />
-        <option value="Class" />
         <option value="CSS File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -231,7 +215,7 @@
       <workItem from="1743408622076" duration="7614000" />
       <workItem from="1743502919670" duration="3780000" />
       <workItem from="1743823277870" duration="1653000" />
-      <workItem from="1743917525276" duration="60629000" />
+      <workItem from="1743917525276" duration="65053000" />
     </task>
     <servers />
   </component>
