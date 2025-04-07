@@ -6,9 +6,12 @@ package mihan.sossou.crossword.model;
  * @param <T> Le type d'objet contenu dans chaque cellule de la grille.
  */
 public class Grid<T> {
-    private int height; // Hauteur de la grille
-    private int width; // Largeur de la grille
-    private T[][] array; // Tableau 2D pour stocker les cellules
+    // Hauteur de la grille
+    private int height;
+    // Largeur de la grille
+    private int width;
+    // Tableau 2D pour stocker les cellules
+    private T[][] array;
 
     /**
      * Constructeur de la grille.
@@ -16,7 +19,8 @@ public class Grid<T> {
      * @param width Largeur de la grille (doit être >= 0).
      * @throws IllegalArgumentException si hauteur ou largeur sont négatives.
      */
-    @SuppressWarnings("unchecked") // Nécessaire pour le casting générique du tableau
+    // Nécessaire pour le casting générique du tableau
+    @SuppressWarnings("unchecked")
     public Grid(int height, int width) {
         if (height < 0 || width < 0) {
             throw new IllegalArgumentException("Les dimensions doivent être positives");
@@ -27,26 +31,18 @@ public class Grid<T> {
         this.array = (T[][]) new Object[height][width];
     }
 
-    /**
-     * Retourne la hauteur de la grille.
-     * @return La hauteur.
-     */
     public int getHeight() {
         return height;
     }
 
-    /**
-     * Retourne la largeur de la grille.
-     * @return La largeur.
-     */
     public int getWidth() {
         return width;
     }
 
     /**
      * Vérifie si les coordonnées fournies sont valides (dans les limites de la grille).
-     * @param row L'indice de ligne (0-based).
-     * @param column L'indice de colonne (0-based).
+     * @param row L'indice de ligne.
+     * @param column L'indice de colonne.
      * @return true si les coordonnées sont valides, false sinon.
      */
     public boolean correctCoords(int row, int column) {
@@ -55,23 +51,22 @@ public class Grid<T> {
 
     /**
      * Retourne la valeur de la cellule aux coordonnées spécifiées.
-     * @param row L'indice de ligne (0-based).
-     * @param column L'indice de colonne (0-based).
+     * @param row L'indice de ligne.
+     * @param column L'indice de colonne.
      * @return La valeur de la cellule.
      * @throws IllegalArgumentException si les coordonnées sont invalides.
      */
     public T getCell(int row, int column) {
         if (!correctCoords(row, column)) {
-            // Utilisation d'une exception plus spécifique pourrait être envisagée (IndexOutOfBoundsException)
-            throw new IllegalArgumentException("Coordonnées invalides : (" + row + "," + column + ")");
+            throw new IndexOutOfBoundsException("Coordonnées invalides : (" + row + "," + column + ")");
         }
         return array[row][column];
     }
 
     /**
      * Définit la valeur de la cellule aux coordonnées spécifiées.
-     * @param row L'indice de ligne (0-based).
-     * @param column L'indice de colonne (0-based).
+     * @param row L'indice de ligne.
+     * @param column L'indice de colonne.
      * @param value La nouvelle valeur pour la cellule.
      * @throws IllegalArgumentException si les coordonnées sont invalides.
      */
@@ -94,9 +89,11 @@ public class Grid<T> {
             for (int j = 0; j < width; j++) {
                 // Affiche la valeur de la cellule ou une chaîne vide si null
                 sb.append(array[i][j] == null ? "" : array[i][j]);
-                if (j < width - 1) sb.append("|"); // Séparateur de colonnes
+                // Séparateur de colonnes
+                if (j < width - 1) sb.append("|");
             }
-            if (i < height - 1) sb.append("\n"); // Séparateur de lignes
+            // Séparateur de lignes
+            if (i < height - 1) sb.append("\n");
         }
         return sb.toString();
     }
