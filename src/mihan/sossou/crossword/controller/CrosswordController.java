@@ -1,36 +1,25 @@
 package mihan.sossou.crossword.controller;
 
-// --- Imports (Ajouter ceux qui manquent) ---
 import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.util.Duration; // Pour ScaleTransition
+import javafx.util.Duration;
 import mihan.sossou.crossword.model.Clue;
 import mihan.sossou.crossword.model.Crossword;
 import mihan.sossou.crossword.model.CrosswordSquare;
 
-import java.util.ArrayList; // Pour la vérification sur Entrée
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 
 /**

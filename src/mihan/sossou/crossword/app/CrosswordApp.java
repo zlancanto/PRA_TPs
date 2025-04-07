@@ -126,6 +126,7 @@ public class CrosswordApp extends Application {
     public void stop() throws Exception {
         // Effectue tout nettoyage nécessaire, comme fermer les connexions BD
         System.out.println("Fermeture de l'application Mots Croisés.");
+        database.closeConnection();
         super.stop();
     }
 
