@@ -1,6 +1,5 @@
 package mihan.sossou.tp4;
 
-//import mihan.sossou.tp2.CrosswordV2;
 public class Crossword{
     private boolean horizontal;
     private int ligne;

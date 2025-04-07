@@ -25,7 +25,7 @@ public class ChargeGrid {
     // Retourne la liste des grilles disponibles dans la BD
     public Map<Integer, String> availableGrids() {
     	
-    	HashMap<Integer, String> grilles = new HashMap<Integer, String>();
+    	Map<Integer, String> grilles = new HashMap<>();
     	 String query = "SELECT numero_grille, nom_grille, hauteur, largeur FROM GRID";
 
          try (Statement stmt = connexion.createStatement();
