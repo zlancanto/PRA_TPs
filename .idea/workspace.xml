@@ -5,13 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85000885-0c5a-4d97-bd64-c6df1e40c7ce" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/app/CrosswordApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/CrosswordApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/CrosswordApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/CrosswordApp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/controller/ClueController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/controller/CrosswordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/controller/CrosswordController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/controller/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/controller/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/enums/Direction.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/Clue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/Clue.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/Crossword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/Crossword.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/GridSize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/enums/GridSize.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/view/CrosswordSquareView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/view/CrosswordSquareView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/CrosswordBD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/CrosswordBD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/CrosswordSquare.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/CrosswordSquare.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/Grid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/model/Grid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/style/clue-view.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/style/crossword-square.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/view/ClueView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/view/CrosswordSquareView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/view/CrosswordView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,9 +34,11 @@
       <list>
         <option value="package-info" />
         <option value="module-info" />
-        <option value="CSS File" />
         <option value="Enum" />
+        <option value="JavaFXApplication" />
+        <option value="FxmlFile" />
         <option value="Class" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -44,31 +57,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ChargeGrid.executor&quot;: &quot;Run&quot;,
-    &quot;Application.CrosswordApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Database.executor&quot;: &quot;Run&quot;,
-    &quot;Application.TicTacToeApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.TicTacToeView.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ChargeGridTest.testExtractGrid.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;zlanca&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/mihan/OneDrive/Documents/Univ-Rennes/L3-MIAGE/S2/PRA/TP/TP4/mysql-connector-j-8.0.31.jar&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Java&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ChargeGrid.executor": "Run",
+    "Application.CrosswordApp.executor": "Run",
+    "Application.Database.executor": "Run",
+    "Application.TicTacToeApp.executor": "Run",
+    "Application.TicTacToeView.executor": "Run",
+    "JUnit.ChargeGridTest.testExtractGrid.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "zlanca",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/mihan/OneDrive/Documents/Univ-Rennes/L3-MIAGE/S2/PRA/TP/TP4/mysql-connector-j-8.0.31.jar",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.JavaFX",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Univ-Rennes\Projet\PRA\PRA_TPs\lib" />
@@ -93,11 +106,11 @@
       </method>
     </configuration>
     <configuration name="CrosswordApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="mihan.sossou.crossword.CrosswordApp" />
+      <option name="MAIN_CLASS_NAME" value="mihan.sossou.crossword.app.CrosswordApp" />
       <module name="PRA_TPs" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="mihan.sossou.crossword.*" />
+          <option name="PATTERN" value="mihan.sossou.crossword.app.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -213,12 +226,27 @@
       <workItem from="1742162722122" duration="1566000" />
       <workItem from="1742312696149" duration="2150000" />
       <workItem from="1742369961969" duration="41535000" />
-      <workItem from="1742460529360" duration="25077000" />
+      <workItem from="1742460529360" duration="31956000" />
+      <workItem from="1742676843351" duration="10771000" />
+      <workItem from="1743408622076" duration="7614000" />
+      <workItem from="1743502919670" duration="3780000" />
+      <workItem from="1743823277870" duration="1653000" />
+      <workItem from="1743917525276" duration="60629000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IllegalArgumentException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

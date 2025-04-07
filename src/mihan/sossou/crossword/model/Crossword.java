@@ -1,6 +1,6 @@
 package mihan.sossou.crossword.model;
 
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mihan.sossou.crossword.controller.Database;
@@ -16,6 +16,9 @@ public class Crossword extends Grid<CrosswordSquare> {
     private CrosswordSquare currentSquare;
     private Clue verticalClueCurrent;
     private Clue horizontalClueCurrent;
+    private int currentRow = -1;
+    private int currentColumn = -1;
+    private boolean currentDirectionIsHorizontal = true;
 
     private Crossword(int height, int width) {
         // Appel du constructeur de Grid
@@ -33,113 +36,123 @@ public class Crossword extends Grid<CrosswordSquare> {
         }
     }
 
-    public StringProperty propositionProperty(int row, int column) {
-        return null;
+    // Il y avait problem
+    public ObjectProperty<Character> propositionProperty(int row, int column) {
+        if (!correctCoords(row, column)) {
+            throw new IllegalArgumentException("Coordonnées invalides");
+        }
+        if (isBlackSquare(row, column)) {
+            throw new IllegalArgumentException("Case noire : aucune proposition possible");
+        }
+        return getCell(row, column).propositionProperty();
     }
 
     public boolean isBlackSquare(int row, int column) {
         if (!correctCoords(row, column)) {
-            throw new IllegalArgumentException("Coordonnées invalides");
+            throw new IllegalArgumentException("Coordonnées invalides: (" + row + "," + column + ")");
         }
         return getCell(row, column).isBlack();
     }
 
     public void setBlackSquare(int row, int column, boolean black) {
         if (!correctCoords(row, column)) {
-            throw new IllegalArgumentException("Coordonnées invalides");
+            throw new IllegalArgumentException("Coordonnées invalides: (" + row + "," + column + ")");
         }
         CrosswordSquare square = getCell(row, column);
-        if (!square.isBlack() && black) {
+
+        // On met la case à jour quand l'état est different
+        if (square.isBlack() == black) {
+            return;
+        }
+        square.setBlack(black);
+
+        if (black) {
             square.setSolution(null);
             square.setProposition(null);
             square.setHorizontalDefinition(null);
             square.setVerticalDefinition(null);
-            square.setBlack(true);
-        }
-        else if (square.isBlack() && !black) {
-            square.setSolution(' ');
-            square.setProposition(' ');
-            square.setBlack(false);
+        } else {
+            if (square.getSolution() == null) square.setSolution(' ');
+            if (square.getProposition() == null) square.setProposition(' ');
         }
     }
 
     public char getSolution(int row, int column) {
         if (!correctCoords(row, column)) {
-            throw new IllegalArgumentException("Coordonnées invalides");
+            throw new IllegalArgumentException("Coordonnées invalides: (" + row + "," + column + ")");
         }
 
         if (isBlackSquare(row, column)) {
-            throw new IllegalArgumentException("Case noire ou sans solution");
+            return '\0';
         }
-
-        return getCell(row, column).getSolution();
+        Character solution = getCell(row, column).getSolution();
+        return (solution != null) ? solution : '\0';
     }
 
     public void setSolution(int row, int column, char solution) {
         if (!correctCoords(row, column)) {
-            throw new IllegalArgumentException("Coordonnées invalides");
+            throw new IllegalArgumentException("Coordonnées invalides: (" + row + "," + column + ")");
         }
 
         CrosswordSquare square = getCell(row, column);
-        square.setSolution(solution);
+
         if (square.isBlack()) {
             square.setBlack(false);
+        }
+        square.setSolution(solution);
+
+        if(square.getProposition() == null) {
+            square.setProposition(' ');
         }
     }
 
     public char getProposition(int row, int column) {
         if (!correctCoords(row, column)) {
-            throw new IllegalArgumentException("Coordonnées invalides");
+            throw new IllegalArgumentException("Coordonnées invalides: (" + row + "," + column + ")");
         }
 
         if (isBlackSquare(row, column)) {
-            throw new IllegalArgumentException("Case noire ou sans solution");
+            return '\0';
         }
 
-        CrosswordSquare square = getCell(row, column);
-
-        return square.getProposition();
+        Character proposition = getCell(row, column).getProposition();
+        return (proposition != null) ? proposition : ' ';
     }
 
     public void setProposition(int row, int column, char proposition) {
         if (!correctCoords(row, column)) {
-            throw new IllegalArgumentException("Coordonnées invalides");
+            throw new IllegalArgumentException("Coordonnées invalides: (" + row + "," + column + ")");
         }
 
         if (isBlackSquare(row, column)) {
-            throw new IllegalArgumentException("Case noire ou sans solution");
+            throw new IllegalArgumentException("Case noire ou case sans solution");
         }
 
         CrosswordSquare square = getCell(row, column);
-        square.setProposition(proposition);
+        square.setProposition(Character.toUpperCase(proposition));
     }
 
     public String getDefinition(int row, int column, boolean horizontal) {
         if (!correctCoords(row, column)) {
-            throw new IllegalArgumentException("Coordonnées invalides");
+            throw new IllegalArgumentException("Coordonnées invalides: (" + row + "," + column + ")");
         }
 
         if (isBlackSquare(row, column)) {
-            throw new IllegalArgumentException("Case noire ou sans solution");
+            return null;
         }
 
         CrosswordSquare square = getCell(row, column);
 
-        if (horizontal) {
-            return square.getHorizontalDefinition();
-        }
-        else {
-            return square.getVerticalDefinition();
-        }
+        return horizontal ? square.getHorizontalDefinition() : square.getVerticalDefinition();
     }
 
     public void setDefinition(int row, int column, boolean horizontal, String definition) {
         if (!correctCoords(row, column)) {
-            throw new IllegalArgumentException("Coordonnées invalides");
+            throw new IllegalArgumentException("Coordonnées invalides: (" + row + "," + column + ")");
         }
 
         if (isBlackSquare(row, column)) {
-            throw new IllegalArgumentException("Case noire ou sans solution");
+            throw new IllegalArgumentException("Case noire ou case sans solution");
         }
 
         CrosswordSquare square = getCell(row, column);
@@ -151,12 +164,22 @@ public class Crossword extends Grid<CrosswordSquare> {
         }
     }
 
+    /**
+     * @param database
+     * @param puzzleNumber
+     * @return une grille de mots croisés
+     */
     public static Crossword createPuzzle(Database database, int puzzleNumber) {
 
-        GridSize GRID_SIZE = database.getGridSize(puzzleNumber);
+        if (database == null) {
+            throw new IllegalArgumentException("La BD ne peut être nulle");
+        }
 
-        if (GRID_SIZE == GridSize.SIZE) {
-            throw new RuntimeException("Impossible de créer un puzzle de taille zéro");
+        GridSize GRID_SIZE = database.getGridSize(puzzleNumber);
+        if (GRID_SIZE == null ||
+                GRID_SIZE.getHeight() <= 0 ||
+                GRID_SIZE.getWidth() <= 0) {
+            throw new RuntimeException("Taille de grille invalide reçue pour le numéro de puzzle : " + puzzleNumber);
         }
 
         // Création d'une grille vide
@@ -168,7 +191,12 @@ public class Crossword extends Grid<CrosswordSquare> {
         List<CrosswordBD> crosswordsBD = database.extractGrid(puzzleNumber);
 
         // Remplir les cases qui ont des solutions
-        crossword = addPuzzleValues(crossword, crosswordsBD);
+        if (crosswordsBD == null || crosswordsBD.isEmpty()) {
+            throw new RuntimeException("Aucune donnée de mots croisés n'a été trouvée dans la BD pour le numéro de l'énigme.: " + puzzleNumber);
+        } else {
+            crossword = addPuzzleValues(crossword, crosswordsBD);
+        }
+        determineBlackSquares(crossword);
 
         return crossword;
     }
@@ -177,50 +205,44 @@ public class Crossword extends Grid<CrosswordSquare> {
      * Affiche sur une ligne tous les caractères proposés par le joueur
      */
     public void printProposition() {
-
+        System.out.println("--- Propositions ---");
         for (int row = 0; row < getHeight(); row++) {
-
-            StringBuilder propositions = new StringBuilder();
-
+            StringBuilder line = new StringBuilder();
             for (int col = 0; col < getWidth(); col++) {
-
                 if (isBlackSquare(row, col)) {
-                    // Afficher '*' en cas de case noire
-                    propositions.append("*");
-                }
-                else {
+                    line.append("*");
+                } else {
                     char proposition = getProposition(row, col);
-                    // Afficher '_' en cas de case non rempli
-                    propositions.append(proposition != '\0' ? proposition : "_");
+                    // On utilise '_' pour les caractères vides/nuls, sinon la proposition
+                    line.append((proposition == '\0' || proposition == ' ') ? "_" : proposition);
                 }
+                line.append(" ");
             }
-
-            // Afficher la ligne formatée
-            System.out.println(propositions.toString().toUpperCase());
+            System.out.println(line);
         }
+        System.out.println("--------------------");
     }
 
+    /**
+     * Prints the solution grid to the console.
+     */
     public void printSolution() {
-
+        System.out.println("--- Solution ---");
         for (int row = 0; row < getHeight(); row++) {
-
-            StringBuilder solutions = new StringBuilder();
-
+            StringBuilder line = new StringBuilder();
             for (int col = 0; col < getWidth(); col++) {
-                // Case noire : afficher '*'
                 if (isBlackSquare(row, col)) {
-                    solutions.append("*");
-                }
-                // Case avec solution : afficher la lettre
-                else {
+                    line.append("*");
+                } else {
                     char solution = getSolution(row, col);
-                    solutions.append(solution);
+                    // On utilise '?' pour les solutions nulles/vides.
+                    line.append((solution == '\0') ? "?" : solution);
                 }
+                line.append(" "); // Add space for better readability
             }
-
-            // Afficher la ligne formatée
-            System.out.println(solutions.toString().trim());
+            System.out.println(line);
         }
+        System.out.println("----------------");
     }
 
     /**
@@ -276,6 +298,41 @@ public class Crossword extends Grid<CrosswordSquare> {
         return crossword;
     }
 
+    /**
+     * Interroge la grille et marque toute case qui n'a pas reçu de solution, comme un carré noir.
+     * @param crossword The crossword grid.
+     */
+    private static void determineBlackSquares(Crossword crossword) {
+        for (int r = 0; r < crossword.getHeight(); r++) {
+            for (int c = 0; c < crossword.getWidth(); c++) {
+                CrosswordSquare square = crossword.getCell(r, c);
+                /*
+                * Si une case n'a pas de caractère de solution après avoir traité tous les mots,
+                * et qu'elle n'a pas été explicitement rendue non noire, on la marque comme noire.
+                * */
+                if (square.getSolution() == null || square.getSolution() == '\0') {
+                    // Vérifier s'il fait partie d'un placement de mot qui a initialisé la proposition
+                    if (square.getProposition() == null) {
+                        crossword.setBlackSquare(r, c, true);
+                    } else if (square.getProposition() == ' ' && square.getSolution() == null) {
+                        crossword.setBlackSquare(r, c, true);
+                    }
+                } else {
+                    // S'il y a une solution, on s'assure qu'elle n'est pas noire.
+                    if (square.isBlack()) {
+                        crossword.setBlackSquare(r, c, false);
+                    }
+                    if (square.getProposition() == null) {
+                        square.setProposition(' ');
+                    }
+                }
+            }
+        }
+    }
+
+
+    /* Getters and Setters */
+
     public ObservableList<Clue> getVerticalClues() {
         return verticalClues;
     }
@@ -285,7 +342,10 @@ public class Crossword extends Grid<CrosswordSquare> {
     }
 
     public CrosswordSquare getCurrentSquare() {
-        return currentSquare;
+        if (correctCoords(currentRow, currentColumn)) {
+            return getCell(currentRow, currentColumn);
+        }
+        return null; // Or handle appropriately
     }
 
     public void setCurrentSquare(CrosswordSquare currentSquare) {
@@ -307,4 +367,66 @@ public class Crossword extends Grid<CrosswordSquare> {
     public void setHorizontalClueCurrent(Clue horizontalClueCurrent) {
         this.horizontalClueCurrent = horizontalClueCurrent;
     }
+
+    public int getCurrentRow() { return currentRow; }
+    public int getCurrentColumn() { return currentColumn; }
+    public boolean isCurrentDirectionHorizontal() { return currentDirectionIsHorizontal; }
+
+    /**
+     * Définit la position de la cellule focalisée actuelle.
+     * @param row Row index.
+     * @param column Column index.
+     */
+    public void setCurrentPosition(int row, int column) {
+        if (correctCoords(row, column) && !isBlackSquare(row, column)) {
+            this.currentRow = row;
+            this.currentColumn = column;
+        } else {
+            throw new IllegalArgumentException("Tentative de définir la position actuelle sur un carré invalide ou noir: " + row + "," + column);
+        }
+    }
+
+    /**
+     * Bascule la direction d'entrée actuelle (horizontale/verticale).
+     */
+    public void toggleCurrentDirection() {
+        this.currentDirectionIsHorizontal = !this.currentDirectionIsHorizontal;
+    }
+
+    public void setCurrentDirection(boolean horizontal) {
+        this.currentDirectionIsHorizontal = horizontal;
+    }
+
+    /**
+     * Déplacement de la position actuelle en fonction de la direction et du pas.
+     * @param horizontal Direction du mouvement.
+     * @param step +1 pour le suivant, -1 pour le précédent.
+     * @return Vrai si le déplacement a été réussi, faux sinon (par exemple, il a touché la limite ou le carré noir).
+     */
+    public boolean moveToNextCell(boolean horizontal, int step) {
+        int nextRow = currentRow;
+        int nextCol = currentColumn;
+
+        do {
+            if (horizontal) {
+                nextCol += step;
+            } else {
+                nextRow += step;
+            }
+            // Vérifier les limites
+            if (!correctCoords(nextRow, nextCol)) {
+                return false; // Déplacé hors limites
+            }
+            // Vérifier si la cellule suivante n'est pas noire
+            if (!isBlackSquare(nextRow, nextCol)) {
+                setCurrentPosition(nextRow, nextCol);
+                return true; // A trouvé une cellule suivante valide
+            }
+            // Poursuivre la boucle si la cellule suivante est noire
+        } while (correctCoords(nextRow, nextCol));
+
+        // No valid non-black cell found in this direction
+        return false;
+    }
+
 }

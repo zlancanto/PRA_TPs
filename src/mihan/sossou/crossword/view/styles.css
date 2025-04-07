@@ -1,0 +1,131 @@
+/* styles.css pour l'Application Mots Croisés */
+
+/* Style de base pour toutes les cellules */
+.crossword-cell {
+    -fx-background-color: white;
+    /* Rend les bordures très fines et gris clair pour un aspect 'collé' */
+    -fx-border-color: #E0E0E0; /* Bordure gris clair */
+    -fx-border-width: 0.5px;
+    -fx-font-size: 14px; /* Ajuster la taille de police si nécessaire */
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-padding: 1px; /* Remplissage minimal */
+
+    /* S'assure que le fond du champ texte est blanc */
+    -fx-control-inner-background: white;
+    -fx-text-fill: black; /* Couleur de texte par défaut */
+}
+
+/* Style pour les cellules noires (désactivées) */
+.black-cell {
+    -fx-background-color: black !important;
+    -fx-border-color: black; /* Ou un gris foncé */
+    -fx-control-inner-background: black; /* Met le fond du TextField en noir */
+    -fx-text-fill: black; /* Cache tout texte potentiel */
+    -fx-focus-color: transparent; /* Cache l'anneau de focus sur les cellules désactivées */
+    -fx-faint-focus-color: transparent;
+}
+
+/* Style pour la cellule actuellement focus (bordure bleue comme demandé) */
+.focused-cell {
+    -fx-background-color: white; /* Garde le fond blanc */
+    -fx-control-inner-background: white; /* Garde le fond interne blanc */
+    -fx-border-color: #0078D7; /* Bordure bleu vif */
+    -fx-border-width: 2px; /* Bordure plus épaisse pour le focus */
+    -fx-text-fill: black; /* S'assure que le texte est visible */
+    /* Amène la cellule focus légèrement en avant si nécessaire */
+    /* -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 1, 0, 0, 1); */
+}
+
+/* Style pour les cellules appartenant au mot surligné (ex: fond jaune clair) */
+.highlighted-cell {
+    -fx-background-color: #FFFFE0; /* Jaune clair */
+    -fx-control-inner-background: #FFFFE0; /* Correspond au fond interne */
+    /* Garde la bordure standard sauf si focus */
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 0.5px;
+}
+
+/* Surcharge le style de surlignage quand la cellule est aussi focus */
+.highlighted-cell.focused-cell {
+    -fx-background-color: #FFFFE0; /* Garde le fond de surlignage */
+    -fx-control-inner-background: #FFFFE0; /* Garde le fond interne de surlignage */
+    -fx-border-color: #0078D7; /* Utilise la couleur de bordure de focus */
+    -fx-border-width: 2px; /* Utilise la largeur de bordure de focus */
+    -fx-text-fill: black; /* S'assure que le texte est visible */
+}
+
+/* Style pour les cellules correctement devinées (fond vert) */
+.correct-guess-cell {
+    -fx-background-color: #C8E6C9; /* Vert clair */
+    -fx-control-inner-background: #C8E6C9; /* Correspond au fond interne */
+    -fx-text-fill: black; /* S'assure que le texte est toujours lisible */
+}
+
+/* S'assure que le style de bonne réponse persiste même si surligné/focus */
+.correct-guess-cell.highlighted-cell {
+    -fx-background-color: #A5D6A7; /* Vert légèrement plus foncé si surligné */
+    -fx-control-inner-background: #A5D6A7;
+}
+.correct-guess-cell.focused-cell {
+    -fx-background-color: #C8E6C9; /* Garde le fond vert clair */
+    -fx-control-inner-background: #C8E6C9;
+    -fx-border-color: #0078D7; /* Bordure de focus */
+    -fx-border-width: 2px;
+}
+.correct-guess-cell.highlighted-cell.focused-cell {
+    -fx-background-color: #A5D6A7; /* Fond vert surligné */
+    -fx-control-inner-background: #A5D6A7;
+    -fx-border-color: #0078D7; /* Bordure de focus */
+    -fx-border-width: 2px;
+}
+
+
+/* Style pour le conteneur GridPane */
+.crossword-grid {
+    -fx-background-color: #D3D3D3; /* Fond gris clair pour le conteneur de la grille */
+    -fx-border-color: #A9A9A9; /* Bordure gris plus foncé pour la grille */
+    -fx-border-width: 1px;
+    -fx-padding: 1px; /* Remplissage minimal autour des cellules de la grille */
+    /* Supprime les espaces entre les cellules */
+    -fx-hgap: 0px; /* Espace horizontal entre les cellules */
+    -fx-vgap: 0px; /* Espace vertical entre les cellules */
+}
+
+/* Style pour les éléments ListView (Indices) */
+.list-view .list-cell {
+    -fx-padding: 5px;
+    -fx-font-size: 12px;
+    -fx-text-fill: black; /* Couleur de texte par défaut */
+}
+
+/* Style pour les éléments ListView sélectionnés */
+.list-view .list-cell:filled:selected, .list-view .list-cell:filled:selected:focused {
+    -fx-background-color: #AED6F1; /* Fond bleu clair pour les indices sélectionnés */
+    -fx-text-fill: black;
+}
+
+/* Style pour l'indice correspondant à la direction d'entrée courante */
+.current-direction-clue {
+    -fx-background-color: red !important; /* Texte rouge, !important pour surcharger d'autres états si nécessaire */
+    -fx-text-fill: black !important;
+}
+
+/* S'assure que le texte rouge persiste même si sélectionné */
+.list-view .list-cell.current-direction-clue:filled:selected,
+.list-view .list-cell.current-direction-clue:filled:selected:focused {
+    -fx-background-color: #AED6F1; /* Garde le fond de sélection */
+    -fx-text-fill: black !important; /* Garde le texte rouge */
+}
+
+
+/* Supprime l'anneau de focus du ListView lui-même si désiré */
+.list-view:focused {
+    /* -fx-focus-color: transparent; */
+    /* -fx-faint-focus-color: transparent; */
+}
+
+/* S'assure que le texte du TextField est centré */
+.text-field .text {
+    -fx-text-alignment: center;
+}
