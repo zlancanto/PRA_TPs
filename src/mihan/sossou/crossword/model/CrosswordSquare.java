@@ -9,12 +9,16 @@ import javafx.beans.property.*;
  */
 public class CrosswordSquare {
 
-    // Propriétés JavaFX pour permettre la liaison (binding) si nécessaire
-    private ObjectProperty<Character> solution; // La lettre correcte pour cette case
-    private ObjectProperty<Character> proposition; // La lettre entrée par le joueur
-    private StringProperty horizontalDefinition; // Définition si un mot horizontal commence ici
-    private StringProperty verticalDefinition; // Définition si un mot vertical commence ici
-    private BooleanProperty black; // Indique si c'est une case noire
+    // La lettre correcte pour cette case
+    private ObjectProperty<Character> solution;
+    // La lettre entrée par le joueur
+    private ObjectProperty<Character> proposition;
+    // Définition si un mot horizontal commence ici
+    private StringProperty horizontalDefinition;
+    // Définition si un mot vertical commence ici
+    private StringProperty verticalDefinition;
+    // Indique si c'est une case noire
+    private BooleanProperty black;
 
     /**
      * Constructeur par défaut. Initialise une case comme étant noire
@@ -26,7 +30,8 @@ public class CrosswordSquare {
         proposition = new SimpleObjectProperty<>();
         horizontalDefinition = new SimpleStringProperty();
         verticalDefinition = new SimpleStringProperty();
-        black = new SimpleBooleanProperty(true); // Commence noire par défaut
+        // Commence noire par défaut
+        black = new SimpleBooleanProperty(true);
     }
 
     // --- Getters et Setters pour la Solution ---
@@ -41,16 +46,13 @@ public class CrosswordSquare {
 
     // --- Getters et Setters pour la Définition Horizontale ---
     public String getHorizontalDefinition() { return horizontalDefinition.get(); }
-    public StringProperty horizontalDefinitionProperty() { return horizontalDefinition; }
     public void setHorizontalDefinition(String horizontalDefinition) { this.horizontalDefinition.set(horizontalDefinition); }
 
     // --- Getters et Setters pour la Définition Verticale ---
     public String getVerticalDefinition() { return verticalDefinition.get(); }
-    public StringProperty verticalDefinitionProperty() { return verticalDefinition; }
     public void setVerticalDefinition(String verticalDefinition) { this.verticalDefinition.set(verticalDefinition); }
 
     // --- Getters et Setters pour l'état Case Noire ---
     public boolean isBlack() { return black.get(); }
-    public BooleanProperty blackProperty() { return black; }
     public void setBlack(boolean black) { this.black.set(black); }
 }

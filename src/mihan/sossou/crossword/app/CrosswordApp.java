@@ -60,18 +60,16 @@ public class CrosswordApp extends Application {
             // Passe l'instance de la base de données au contrôleur
             controller.setDatabase(database);
 
-            // --- Chargement de la Grille Initiale ---
-            // Charge une grille par défaut ou aléatoire au démarrage
+            // Charge une grille aléatoire au démarrage
             int initialPuzzleNumber = (int) (Math.random() * 10) + 1; // Ou obtenir depuis config, args, ou aléatoire
             try {
                 // Vérifie si des grilles existent
                 if (database.gridSize() > 0) {
-                    // Vous pourriez vouloir un moyen de sélectionner une grille ou de charger aléatoirement
-                    // Pour l'instant, chargement de la grille #1
+                    // charger aléatoirement un crossword
                     controller.loadPuzzle(initialPuzzleNumber);
                 } else {
                     System.err.println("Aucune grille trouvée dans la base de données.");
-                    // Optionnellement, afficher un message d'erreur dans l'UI
+                    // afficher un message d'erreur dans l'UI
                     controller.showError("Aucune grille disponible dans la base de données.");
                 }
             } catch (Exception e) {
@@ -82,7 +80,7 @@ public class CrosswordApp extends Application {
             // --- Fin Chargement Grille Initiale ---
 
             // Crée la scène
-            Scene scene = new Scene(root); // Ajuster la taille si nécessaire
+            Scene scene = new Scene(root);
 
             // Charge la feuille de style CSS
             URL cssUrl = getClass().getResource("/mihan/sossou/crossword/view/styles.css");
@@ -98,18 +96,17 @@ public class CrosswordApp extends Application {
             scene.setOnKeyPressed(event -> {
                 if (ctrlW.match(event)) {
                     System.out.println("Ctrl+W pressé - Fermeture de l'application.");
-                    Platform.exit(); // Ou primaryStage.close();
+                    Platform.exit();
                 }
-                // Laisse les autres touches être gérées par le contrôleur si nécessaire
-                // event.consume(); // Ne pas consommer ici pour laisser le contrôleur agir
             });
-            // *****************************
 
             // Configure la fenêtre principale (Stage)
-            primaryStage.setTitle("Mots Croisés - Mihan SOSSOU");
+            primaryStage.setTitle("Crossword Puzzle");
             primaryStage.setScene(scene);
-            primaryStage.sizeToScene(); // Ajuste la taille de la fenêtre au contenu de la scène
-            primaryStage.setResizable(true); // Autorise le redimensionnement
+            // Ajuste la taille de la fenêtre au contenu de la scène
+            primaryStage.sizeToScene();
+            // Autorise le redimensionnement
+            primaryStage.setResizable(true);
             primaryStage.show();
 
             // Demande le focus sur le gridPane après l'affichage de la fenêtre
@@ -120,23 +117,20 @@ public class CrosswordApp extends Application {
 
         } catch (IOException e) {
             System.err.println("Échec du chargement de l'interface utilisateur de l'application."); e.printStackTrace();
-            // Affiche une alerte d'erreur critique
         } catch (RuntimeException e) {
             System.err.println("Une erreur d'exécution s'est produite au démarrage."); e.printStackTrace();
-            // Affiche une alerte d'erreur critique
         }
     }
 
     @Override
     public void stop() throws Exception {
         // Effectue tout nettoyage nécessaire, comme fermer les connexions BD
-        // (Bien que la classe Database n'ait pas actuellement de méthode close)
         System.out.println("Fermeture de l'application Mots Croisés.");
+        database.closeConnection();
         super.stop();
     }
 
     public static void main(String[] args) {
-        // Lance l'application JavaFX
         launch(args);
     }
 }
