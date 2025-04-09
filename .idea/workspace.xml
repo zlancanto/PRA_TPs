@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="85000885-0c5a-4d97-bd64-c6df1e40c7ce" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/app/CrosswordApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/app/CrosswordApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/controller/CrosswordController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/controller/CrosswordController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mihan/sossou/crossword/controller/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mihan/sossou/crossword/controller/Database.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,31 +41,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ChargeGrid.executor": "Run",
-    "Application.CrosswordApp.executor": "Run",
-    "Application.Database.executor": "Run",
-    "Application.TicTacToeApp.executor": "Run",
-    "Application.TicTacToeView.executor": "Run",
-    "JUnit.ChargeGridTest.testExtractGrid.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "zlanca",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/mihan/OneDrive/Documents/Univ-Rennes/L3-MIAGE/S2/PRA/TP/TP4/mysql-connector-j-8.0.31.jar",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.JavaFX",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ChargeGrid.executor&quot;: &quot;Run&quot;,
+    &quot;Application.CrosswordApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Database.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TicTacToeApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TicTacToeView.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ChargeGridTest.testExtractGrid.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;zlanca&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/mihan/OneDrive/Documents/Univ-Rennes/L3-MIAGE/S2/PRA/TP/TP4/mysql-connector-j-8.0.31.jar&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Univ-Rennes\Projet\PRA\PRA_TPs\lib" />
@@ -217,7 +215,8 @@
       <workItem from="1743408622076" duration="7614000" />
       <workItem from="1743502919670" duration="3780000" />
       <workItem from="1743823277870" duration="1653000" />
-      <workItem from="1743917525276" duration="66554000" />
+      <workItem from="1743917525276" duration="70815000" />
+      <workItem from="1744057612012" duration="5343000" />
     </task>
     <servers />
   </component>
